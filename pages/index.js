@@ -1,5 +1,9 @@
+import { Typography } from '@material-ui/core'
+
 const Index = () => (
-  <p>Hello World!</p>
+  <Typography variant='h1'>
+    Hello World!
+  </Typography>
 )
 
 export default Index
