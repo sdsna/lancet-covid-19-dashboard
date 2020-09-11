@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 import { Box } from '@material-ui/core'
+import MapZoomControls from 'components/MapZoomControls'
 
 const MapSvg = dynamic(() => import('components/MapSvg'), { ssr: false })
 
@@ -26,6 +27,7 @@ const MapPane = ({ countries }) => (
       <MapSvg
         countries={countries} />
     </Box>
+    <MapZoomControls />
   </Box>
 )
 
