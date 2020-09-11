@@ -1,9 +1,14 @@
-import { Typography } from '@material-ui/core'
+import { Container, Typography } from '@material-ui/core'
+import AppLayout from 'layouts/AppLayout'
 
 const Index = () => (
-  <Typography variant='h1'>
-    Hello World!
-  </Typography>
+  <AppLayout>
+    <Container>
+      <Typography variant='h1'>
+        Hello World!
+      </Typography>
+    </Container>
+  </AppLayout>
 )
 
 export default Index
