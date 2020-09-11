@@ -26,7 +26,8 @@
     "react-dom": "^16.13.1",
     "react-resize-observer": "^1.1.1",
     "react-svgmt": "^1.1.11",
-    "styled-components": "^5.2.0"
+    "styled-components": "^5.2.0",
+    "svg-pan-zoom": "^3.6.1"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^9.4.4",
