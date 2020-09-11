@@ -1,20 +1,24 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document'
-import { ServerStyleSheet } from 'styled-components'
-import { ServerStyleSheets } from '@material-ui/core/styles'
-import { GA_TRACKING_ID } from 'helpers/gtag'
+import Document, { Html, Head, Main, NextScript } from "next/document";
+import { ServerStyleSheet } from "styled-components";
+import { ServerStyleSheets } from "@material-ui/core/styles";
+import { GA_TRACKING_ID } from "helpers/gtag";
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
-    const styledComponentsSheet = new ServerStyleSheet()
-    const materialSheets = new ServerStyleSheets()
-    const originalRenderPage = ctx.renderPage
+    const styledComponentsSheet = new ServerStyleSheet();
+    const materialSheets = new ServerStyleSheets();
+    const originalRenderPage = ctx.renderPage;
 
     try {
-      ctx.renderPage = () => originalRenderPage({
-        enhanceApp: App => props => styledComponentsSheet.collectStyles(materialSheets.collect(<App {...props} />))
-      })
+      ctx.renderPage = () =>
+        originalRenderPage({
+          enhanceApp: (App) => (props) =>
+            styledComponentsSheet.collectStyles(
+              materialSheets.collect(<App {...props} />)
+            ),
+        });
 
-      const initialProps = await Document.getInitialProps(ctx)
+      const initialProps = await Document.getInitialProps(ctx);
 
       return {
         ...initialProps,
@@ -24,10 +28,10 @@ class MyDocument extends Document {
             {materialSheets.getStyleElement()}
             {styledComponentsSheet.getStyleElement()}
           </>
-        )
-      }
+        ),
+      };
     } finally {
-      styledComponentsSheet.seal()
+      styledComponentsSheet.seal();
     }
   }
 
@@ -66,4 +70,4 @@ class MyDocument extends Document {
   }
 }
 
-export default MyDocument
+export default MyDocument;

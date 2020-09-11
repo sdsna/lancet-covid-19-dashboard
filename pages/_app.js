@@ -1,18 +1,17 @@
-import App from 'next/app'
-import Head from 'next/head'
-import Router from 'next/router'
-import { useEffect } from 'react'
-import { CssBaseline, ThemeProvider } from '@material-ui/core'
-import NextNProgress from 'nextjs-progressbar'
-import { StoreProvider } from 'helpers/uiStore'
-import getTheme from 'helpers/getTheme'
-import * as gtag from 'helpers/gtag'
-
+import App from "next/app";
+import Head from "next/head";
+import Router from "next/router";
+import { useEffect } from "react";
+import { CssBaseline, ThemeProvider } from "@material-ui/core";
+import NextNProgress from "nextjs-progressbar";
+import { StoreProvider } from "helpers/uiStore";
+import getTheme from "helpers/getTheme";
+import * as gtag from "helpers/gtag";
 
 function MyApp({ Component, pageProps }) {
   // Remove the server-side injected CSS.
   useEffect(() => {
-    const jssStyles = document.querySelector('#jss-server-side');
+    const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
@@ -21,19 +20,22 @@ function MyApp({ Component, pageProps }) {
   // Track pages
   useEffect(() => {
     const handleRouteChange = (url) => {
-      gtag.pageview(url)
-    }
-    Router.events.on('routeChangeComplete', handleRouteChange)
+      gtag.pageview(url);
+    };
+    Router.events.on("routeChangeComplete", handleRouteChange);
     return () => {
-      Router.events.off('routeChangeComplete', handleRouteChange)
-    }
-  }, [])
+      Router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, []);
 
   return (
     <>
       <Head>
         <title>Lancet Covid-19 Dashboard</title>
-        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width"
+        />
       </Head>
       <NextNProgress />
       <StoreProvider>
@@ -44,7 +46,7 @@ function MyApp({ Component, pageProps }) {
         </ThemeProvider>
       </StoreProvider>
     </>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;

@@ -1,47 +1,50 @@
-import getTheme from 'helpers/getTheme'
-import { css } from 'styled-components'
+import getTheme from "helpers/getTheme";
+import { css } from "styled-components";
 
-const { breakpoints } = getTheme()
+const { breakpoints } = getTheme();
 
 // creates a media query and a container content query for the provided
 // breakpoint and the given CSS tagged template literal.
 const contentSizeQuery = (size) => {
-  return function(strings, ...expressions) {
-    const styles = css(strings, ...expressions)
+  return function (strings, ...expressions) {
+    const styles = css(strings, ...expressions);
 
-    switch(size) {
+    switch (size) {
       // the default styles
       // Note that each breakpoint can only show content up to a maximum size.
       // For example, on an MD-sized viewport (< 1280px), the user can only
       // see styles for #content.small and #content.medium.
       // The #content.large styles are only available for viewports >= 1280px.
-      case 'small':
+      case "small":
         return css`
-          ${breakpoints.up('xs')} {
+          ${breakpoints.up("xs")} {
             #content &,
             #content.small & {
               ${styles}
             }
-          }`
-      case 'medium':
+          }
+        `;
+      case "medium":
         return css`
-          ${breakpoints.up('sm')} {
+          ${breakpoints.up("sm")} {
             #content &,
             #content.medium & {
               ${styles}
             }
-          }`
-      case 'large':
+          }
+        `;
+      case "large":
         return css`
-          ${breakpoints.up('md')} {
+          ${breakpoints.up("md")} {
             #content &,
             #content.large & {
               ${styles}
             }
-          }`
-      case 'small-only':
+          }
+        `;
+      case "small-only":
         return css`
-          ${breakpoints.down('sm')} {
+          ${breakpoints.down("sm")} {
             #content & {
               ${styles}
             }
@@ -49,10 +52,11 @@ const contentSizeQuery = (size) => {
 
           #content.small & {
             ${styles}
-          }`
-      case 'medium-down':
+          }
+        `;
+      case "medium-down":
         return css`
-          ${breakpoints.down('sm')} {
+          ${breakpoints.down("sm")} {
             #content & {
               ${styles}
             }
@@ -61,9 +65,10 @@ const contentSizeQuery = (size) => {
           #content.small &,
           #content.medium & {
             ${styles}
-          }`
+          }
+        `;
     }
-  }
-}
+  };
+};
 
-export default contentSizeQuery
+export default contentSizeQuery;
