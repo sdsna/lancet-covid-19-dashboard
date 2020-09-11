@@ -9,7 +9,7 @@ export const MapStoreProvider = ({ children }) => {
     hideTooltip: () => {
       store.tooltip = null
     },
-    showTooltip: ({ country, event: { pageX: X, pageY: Y }}) => {
+    showTooltip: ({ countryId, event: { pageX: X, pageY: Y }}) => {
       const anchor = {
         getBoundingClientRect: () => ({
           top: Y,
@@ -23,7 +23,7 @@ export const MapStoreProvider = ({ children }) => {
         clientHeight: 0,
       }
 
-      store.tooltip = { country, anchor }
+      store.tooltip = { countryId, anchor }
     }
   }))
   return <storeContext.Provider value={store}>{children}</storeContext.Provider>
