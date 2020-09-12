@@ -1,3 +1,7 @@
+# Downloaded data
+/data/codebook.csv
+/data/indicators/
+
 # Logs
 logs
 *.log
