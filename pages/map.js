@@ -10,16 +10,19 @@ import getIndicatorProps from "helpers/getIndicatorProps";
 import getCountryFlagPath from "helpers/getCountryFlagPath";
 
 const Map = ({ indicator, countries, observations, bounds }) => {
-  // date of the data to show
-  const date = "2020-09-10";
-
   const [mapData, setMapData] = useState([]);
 
   const getCountryName = useCallback((countryId) => countries[countryId], [
     countries,
   ]);
 
-  const getCountryDate = useCallback(() => date, []);
+  const getCountryDate = useCallback(
+    (countryId) => {
+      const countryData = mapData.find((data) => data.countryId === countryId);
+      return countryData?.date;
+    },
+    [mapData]
+  );
 
   const getCountryValue = useCallback(
     (countryId) => {
@@ -54,12 +57,14 @@ const Map = ({ indicator, countries, observations, bounds }) => {
       .clamp(true);
 
     const data = Object.keys(observations).map((id) => {
-      const value = observations[id][date];
+      const latestDate = observations[id]["latestDate"];
+      const value = observations[id][latestDate];
 
       return {
         countryId: id,
         fill: colorScale(value),
         value,
+        date: latestDate,
       };
     });
 
@@ -94,6 +99,13 @@ export async function getStaticProps() {
   const { indicator, countries, observations } = await getIndicatorProps(
     "jhu_confirmed"
   );
+
+  // Add latest date to each country
+  Object.keys(observations).forEach((countryId) => {
+    observations[countryId]["latestDate"] = Object.keys(observations[countryId])
+      .sort()
+      .pop();
+  });
 
   // Evaluate max and min values for indicator
   // TODO: Calculate better bounds for color scale (perhaps based on 2.5th
