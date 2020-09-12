@@ -6,8 +6,8 @@ import millify from "millify";
 import MapLayout from "layouts/MapLayout";
 import MapPane from "components/MapPane";
 import MapTooltip from "components/MapTooltip";
-
 import getIndicatorProps from "helpers/getIndicatorProps";
+import getCountryFlagPath from "helpers/getCountryFlagPath";
 
 const Map = ({ countries, observations, indicator }) => {
   const [mapData, setMapData] = useState([]);
@@ -53,7 +53,7 @@ const Map = ({ countries, observations, indicator }) => {
     <MapLayout mobileMenuLabel="Settings">
       <MapPane data={mapData} />
       <MapTooltip
-        getImage={() => {}}
+        getImage={getCountryFlagPath}
         getLabel={getTooltipLabel}
         getText={getTooltipText}
       />
