@@ -2,21 +2,38 @@ import { useCallback, useEffect, useState } from "react";
 import { scaleLinear } from "d3-scale";
 import styled from "styled-components";
 import millify from "millify";
-
 import MapLayout from "layouts/MapLayout";
+import MapDrawer from "components/MapDrawer";
 import MapPane from "components/MapPane";
 import MapTooltip from "components/MapTooltip";
 import getIndicatorProps from "helpers/getIndicatorProps";
 import getCountryFlagPath from "helpers/getCountryFlagPath";
 
-const Map = ({ countries, observations, indicator }) => {
+const Map = ({ indicator, countries, observations, bounds }) => {
+  // date of the data to show
+  const date = "2020-09-10";
+
   const [mapData, setMapData] = useState([]);
 
-  const getTooltipLabel = useCallback((countryId) => countries[countryId], [
+  const getCountryName = useCallback((countryId) => countries[countryId], [
     countries,
   ]);
 
-  const getTooltipText = useCallback(
+  const getCountryDate = useCallback(() => date, []);
+
+  const getCountryValue = useCallback(
+    (countryId) => {
+      const countryData = mapData.find((data) => data.countryId === countryId);
+      const value = countryData?.value;
+
+      if (value) return Number(value).toLocaleString();
+
+      return "No value";
+    },
+    [mapData]
+  );
+
+  const getApproximateCountryValue = useCallback(
     (countryId) => {
       const countryData = mapData.find((data) => data.countryId === countryId);
       const value = countryData?.value;
@@ -29,7 +46,7 @@ const Map = ({ countries, observations, indicator }) => {
   );
 
   useEffect(() => {
-    const { max, min } = indicator;
+    const { max, min } = bounds;
 
     const colorScale = scaleLinear()
       .domain([min, max])
@@ -37,7 +54,7 @@ const Map = ({ countries, observations, indicator }) => {
       .clamp(true);
 
     const data = Object.keys(observations).map((id) => {
-      const value = observations[id]["2020-09-10"];
+      const value = observations[id][date];
 
       return {
         countryId: id,
@@ -50,19 +67,33 @@ const Map = ({ countries, observations, indicator }) => {
   }, [observations, indicator]);
 
   return (
-    <MapLayout mobileMenuLabel="Settings">
+    <MapLayout
+      Drawer={
+        <MapDrawer
+          indicator={indicator}
+          indicators={[indicator]}
+          getCountryFlagPath={getCountryFlagPath}
+          getCountryName={getCountryName}
+          getCountryValue={getCountryValue}
+          getCountryDate={getCountryDate}
+        />
+      }
+      mobileMenuLabel={indicator.id}
+    >
       <MapPane data={mapData} />
       <MapTooltip
         getImage={getCountryFlagPath}
-        getLabel={getTooltipLabel}
-        getText={getTooltipText}
+        getLabel={getCountryName}
+        getText={getApproximateCountryValue}
       />
     </MapLayout>
   );
 };
 
 export async function getStaticProps() {
-  const { countries, observations } = await getIndicatorProps("jhu_confirmed");
+  const { indicator, countries, observations } = await getIndicatorProps(
+    "jhu_confirmed"
+  );
 
   // Evaluate max and min values for indicator
   // TODO: Calculate better bounds for color scale (perhaps based on 2.5th
@@ -77,9 +108,10 @@ export async function getStaticProps() {
 
   return {
     props: {
+      indicator,
       countries,
       observations,
-      indicator: {
+      bounds: {
         max,
         min,
       },

@@ -1,8 +1,8 @@
-import FullScreenAppLayout from "layouts/FullScreenLayout";
+import FullScreenLayout from "layouts/FullScreenLayout";
 import { MapStoreProvider } from "helpers/mapStore";
 
 const MapLayout = ({ children, Drawer, mobileMenuLabel }) => (
-  <FullScreenAppLayout
+  <FullScreenLayout
     onContentResize={() => {
       window?.zoomAndPan?.resize();
       window?.zoomAndPan?.fit();
@@ -13,7 +13,7 @@ const MapLayout = ({ children, Drawer, mobileMenuLabel }) => (
     Drawer={Drawer}
   >
     <MapStoreProvider>{children}</MapStoreProvider>
-  </FullScreenAppLayout>
+  </FullScreenLayout>
 );
 
 export default MapLayout;
