@@ -68,8 +68,13 @@ const PageSelectionButton = ({
             }}
             getOptionLabel={getOptionLabel}
             groupBy={getOptionGroup}
-            PopperComponent="div"
-            PaperComponent="div"
+            PopperComponent={({ anchorEl, ...otherProps }) => (
+              <Box {...otherProps} />
+            )}
+            PaperComponent={({ anchorEl, ...otherProps }) => (
+              <Box {...otherProps} />
+            )}
+            popupIcon={null}
             renderInput={(params) => (
               <TextField
                 {...params}
