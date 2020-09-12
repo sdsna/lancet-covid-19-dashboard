@@ -16,7 +16,7 @@ const NormalizedSvg = styled(SvgLoader)`
   transition: opacity 0.3s ease-out;
 
   .countries,
-  circle[id] {
+  circle[id]:not([fill]) {
     fill: #e1e1e1;
   }
 
