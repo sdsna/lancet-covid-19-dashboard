@@ -2,6 +2,7 @@ import App from "next/app";
 import Head from "next/head";
 import Router from "next/router";
 import { useEffect } from "react";
+import { useStaticRendering } from "mobx-react-lite";
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import NextNProgress from "nextjs-progressbar";
 import { StoreProvider } from "helpers/uiStore";
@@ -9,6 +10,11 @@ import getTheme from "helpers/getTheme";
 import * as gtag from "helpers/gtag";
 
 function MyApp({ Component, pageProps }) {
+  // use static rendering in SSR mode
+  if (typeof window === "undefined") {
+    useStaticRendering(true);
+  }
+
   // Remove the server-side injected CSS.
   useEffect(() => {
     const jssStyles = document.querySelector("#jss-server-side");
