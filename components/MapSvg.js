@@ -17,7 +17,7 @@ const NormalizedSvg = styled(SvgLoader)`
 
   .countries,
   circle[id] {
-    fill: #979797;
+    fill: #e1e1e1;
   }
 
   [clickable="clickable"] {
@@ -119,7 +119,7 @@ const onSVGReady = (node) => {
   node.style.opacity = "1";
 };
 
-const MapSvgSection = observer(({ countries }) => {
+const MapSvgSection = observer(({ data }) => {
   const mapStore = useMapStore();
   const uiStore = useStore();
 
@@ -133,16 +133,14 @@ const MapSvgSection = observer(({ countries }) => {
   return (
     <NormalizedSvg path="/static/map.svg" onSVGReady={onSVGReady}>
       <>
-        {countries.map(({ id, fill, disabled }) => (
+        {data.map(({ countryId, fill, disabled }) => (
           <SvgProxy
-            key={id}
-            selector={`#${id}`}
+            key={countryId}
+            selector={`#${countryId}`}
             clickable={disabled ? "disabled" : "clickable"}
             fill={fill}
-            onClick={() => !disabled && uiStore.openDrawer(id)}
-            onMouseMove={(event) =>
-              mapStore.showTooltip({ event, countryId: id })
-            }
+            onClick={() => !disabled && uiStore.openDrawer(countryId)}
+            onMouseMove={(event) => mapStore.showTooltip({ event, countryId })}
             onMouseLeave={mapStore.hideTooltip}
           />
         ))}

@@ -12,7 +12,7 @@ const endDrag = (event) => {
   event.currentTarget.style.cursor = "grab";
 };
 
-const MapPane = ({ countries }) => (
+const MapPane = ({ data }) => (
   <Box display="flex" flexGrow="1" position="relative">
     <Box
       display="flex"
@@ -22,7 +22,7 @@ const MapPane = ({ countries }) => (
       onMouseUp={endDrag}
       onMouseLeave={endDrag}
     >
-      <MapSvg countries={countries} />
+      <MapSvg data={data} />
     </Box>
     <MapZoomControls />
   </Box>
