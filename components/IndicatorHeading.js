@@ -16,7 +16,6 @@ const IndicatorHeading = ({ indicator }) => (
     <TypographyWithEmphasis variant="body1">
       {indicator.id}
     </TypographyWithEmphasis>
-    <DrawerText color="textSecondary">{indicator.unit}</DrawerText>
   </>
 );
 
