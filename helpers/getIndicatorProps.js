@@ -26,7 +26,7 @@ const getIndicatorProps = async (indicatorId) => {
 
   data.forEach(({ iso_code, country, date, [indicatorId]: value }) => {
     observations[iso_code] = observations[iso_code] || {};
-    observations[iso_code][date] = value;
+    observations[iso_code][date] = parseFloat(value);
 
     countries[iso_code] = country;
   });

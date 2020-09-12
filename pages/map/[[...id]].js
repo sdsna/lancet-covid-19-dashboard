@@ -6,10 +6,11 @@ import MapLayout from "layouts/MapLayout";
 import MapDrawer from "components/MapDrawer";
 import MapPane from "components/MapPane";
 import MapTooltip from "components/MapTooltip";
+import getIndicators from "helpers/getIndicators";
 import getIndicatorProps from "helpers/getIndicatorProps";
 import getCountryFlagPath from "helpers/getCountryFlagPath";
 
-const Map = ({ indicator, countries, observations, bounds }) => {
+const Map = ({ indicator, countries, observations, bounds, indicators }) => {
   const [mapData, setMapData] = useState([]);
 
   const getCountryName = useCallback((countryId) => countries[countryId], [
@@ -58,7 +59,7 @@ const Map = ({ indicator, countries, observations, bounds }) => {
 
     const data = Object.keys(observations).map((id) => {
       const latestDate = observations[id]["latestDate"];
-      const value = observations[id][latestDate];
+      const value = parseFloat(observations[id][latestDate]);
 
       return {
         countryId: id,
@@ -69,14 +70,14 @@ const Map = ({ indicator, countries, observations, bounds }) => {
     });
 
     setMapData(data);
-  }, [observations, indicator]);
+  }, [observations, indicator, bounds]);
 
   return (
     <MapLayout
       Drawer={
         <MapDrawer
           indicator={indicator}
-          indicators={[indicator]}
+          indicators={indicators}
           getCountryFlagPath={getCountryFlagPath}
           getCountryName={getCountryName}
           getCountryValue={getCountryValue}
@@ -95,9 +96,33 @@ const Map = ({ indicator, countries, observations, bounds }) => {
   );
 };
 
-export async function getStaticProps() {
+export async function getStaticPaths() {
+  // Fetch list of indicators
+  const indicators = await getIndicators();
+
+  const paths = indicators.map((indicator) => ({
+    params: {
+      id: [indicator.id],
+    },
+  }));
+
+  // Add one path without indicator ID
+  paths.push({ params: { id: [] } });
+
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({ params }) {
+  // Fetch list of indicators
+  const indicators = await getIndicators();
+
+  // Load data for the requested indicator (or the first indicator in the list)
+  const indicatorId = (params.id && params.id[0]) || indicators[0].id;
   const { indicator, countries, observations } = await getIndicatorProps(
-    "jhu_confirmed"
+    indicatorId
   );
 
   // Add latest date to each country
@@ -107,14 +132,12 @@ export async function getStaticProps() {
       .pop();
   });
 
-  // Evaluate max and min values for indicator
+  // Evaluate max and min values for indicator based on latest date
   // TODO: Calculate better bounds for color scale (perhaps based on 2.5th
   //       percentile)
-  const values = [
-    ...Object.values(observations).flatMap((dataPoints) => [
-      ...Object.values(dataPoints),
-    ]),
-  ];
+  const values = Object.values(observations).map(
+    (dataPoints) => dataPoints[dataPoints["latestDate"]]
+  );
   const max = Math.max(...values);
   const min = Math.min(...values);
 
@@ -127,6 +150,7 @@ export async function getStaticProps() {
         max,
         min,
       },
+      indicators,
     },
   };
 }

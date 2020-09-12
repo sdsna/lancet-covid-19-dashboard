@@ -8,6 +8,8 @@ import { useStore } from "helpers/uiStore";
 import { useMapStore } from "helpers/mapStore";
 import keepMapOnScreen from "helpers/keepMapOnScreen";
 
+const noop = () => {};
+
 const NormalizedSvg = styled(SvgLoader)`
   width: 100%;
   height: 100%;
@@ -133,6 +135,14 @@ const MapSvgSection = observer(({ data }) => {
   return (
     <NormalizedSvg path="/static/map.svg" onSVGReady={onSVGReady}>
       <>
+        <SvgProxy
+          selector="[id]"
+          fill={"#e1e1e1"}
+          clickable="disabled"
+          onClick={noop}
+          onMouseMove={noop}
+          onMouseLeave={noop}
+        />
         {data.map(({ countryId, fill, disabled }) => (
           <SvgProxy
             key={countryId}

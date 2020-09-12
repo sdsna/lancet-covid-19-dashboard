@@ -12,7 +12,7 @@ const MapPageSelectionButton = ({ children, indicators }) => {
       modalTitle="Select an indicator"
       modalDescription="Select an indicator to display on the map."
       onSelect={(indicator) => {
-        router.push("/map");
+        router.push("/map/[[...id]]", `/map/${indicator.id}`);
       }}
     >
       {children}
