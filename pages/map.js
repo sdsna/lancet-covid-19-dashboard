@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { scaleLinear } from "d3-scale";
 import styled from "styled-components";
+import millify from "millify";
 
 import MapLayout from "layouts/MapLayout";
 import MapPane from "components/MapPane";
@@ -16,8 +17,14 @@ const Map = ({ countries, observations, indicator }) => {
   ]);
 
   const getTooltipText = useCallback(
-    (countryId) =>
-      mapData.find((dataPoint) => dataPoint.countryId === countryId)?.value,
+    (countryId) => {
+      const countryData = mapData.find((data) => data.countryId === countryId);
+      const value = countryData?.value;
+
+      if (value) return millify(value);
+
+      return "No value";
+    },
     [mapData]
   );
 
