@@ -2,6 +2,9 @@
 /data/codebook.csv
 /data/indicators/
 
+# Ignore output directory
+/out
+
 # Logs
 logs
 *.log
