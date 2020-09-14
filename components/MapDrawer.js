@@ -8,7 +8,7 @@ import DrawerHeadingWithCaption from "components/DrawerHeadingWithCaption";
 import DrawerText from "components/DrawerText";
 import MapLegend from "components/MapLegend";
 import IndicatorHeading from "components/IndicatorHeading";
-// import IndicatorTimeseries from "blocks/IndicatorTimeseries";
+import IndicatorTimeseries from "components/IndicatorTimeseries";
 import IndicatorMetadata from "components/IndicatorMetadata";
 import MapPageSelectionButton from "components/MapPageSelectionButton";
 import { useStore } from "helpers/uiStore";
@@ -19,7 +19,15 @@ const TypographyWithEmphasis = styled(Typography)`
   }
 `;
 
-const CountryInfo = ({ id, name, flagPath, value, date, onClose }) => (
+const CountryInfo = ({
+  id,
+  name,
+  flagPath,
+  value,
+  date,
+  timeseries,
+  onClose,
+}) => (
   <>
     <DrawerSection gray>
       <Box display="flex" alignItems="center">
@@ -42,17 +50,13 @@ const CountryInfo = ({ id, name, flagPath, value, date, onClose }) => (
         {value}
       </DrawerHeadingWithCaption>
     </DrawerSection>
-    {/* <Divider />
+    <Divider />
     <IndicatorTimeseries
-      timeseries={findTimeseriesByRegionAndIndicator(
-        timeseries,
-        country,
-        indicator
-      )}
-      indicator={indicator}
-      country={country}
+      chartData={timeseries}
+      countryName={name}
+      countryId={id}
       gray
-    /> */}
+    />
   </>
 );
 
@@ -64,6 +68,7 @@ const MapDrawer = observer(
     getCountryFlagPath,
     getCountryValue,
     getCountryDate,
+    getTimeseries,
   }) => {
     const uiStore = useStore();
     const countryId = uiStore.target;
@@ -81,6 +86,7 @@ const MapDrawer = observer(
             flagPath={getCountryFlagPath(countryId)}
             value={getCountryValue(countryId)}
             date={getCountryDate(countryId)}
+            timeseries={getTimeseries(countryId)}
             onClose={() => uiStore.clearTarget()}
           />
         ) : (

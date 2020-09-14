@@ -37,6 +37,23 @@ const Map = ({ indicator, countries, observations, bounds, indicators }) => {
     [mapData]
   );
 
+  const getTimeseries = useCallback(
+    (countryId) => {
+      const countryData = observations[countryId];
+      return Object.keys(countryData)
+        .map((date) => {
+          if (date === "latestDate") return;
+
+          return {
+            date,
+            [countryId]: countryData[date],
+          };
+        })
+        .filter(Boolean);
+    },
+    [observations]
+  );
+
   const getApproximateCountryValue = useCallback(
     (countryId) => {
       const countryData = mapData.find((data) => data.countryId === countryId);
@@ -82,6 +99,7 @@ const Map = ({ indicator, countries, observations, bounds, indicators }) => {
           getCountryName={getCountryName}
           getCountryValue={getCountryValue}
           getCountryDate={getCountryDate}
+          getTimeseries={getTimeseries}
         />
       }
       mobileMenuLabel={indicator.id}
