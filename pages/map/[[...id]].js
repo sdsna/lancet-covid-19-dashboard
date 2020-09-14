@@ -30,7 +30,7 @@ const Map = ({ indicator, countries, observations, bounds, indicators }) => {
       const countryData = mapData.find((data) => data.countryId === countryId);
       const value = countryData?.value;
 
-      if (value) return Number(value).toLocaleString();
+      if (value != null) return Number(value).toLocaleString();
 
       return "No value";
     },
@@ -59,7 +59,7 @@ const Map = ({ indicator, countries, observations, bounds, indicators }) => {
       const countryData = mapData.find((data) => data.countryId === countryId);
       const value = countryData?.value;
 
-      if (value) return millify(value);
+      if (value != null) return millify(value);
 
       return "No value";
     },
