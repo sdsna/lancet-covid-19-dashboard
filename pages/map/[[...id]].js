@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { scaleLinear } from "d3-scale";
-import { compareAsc, format, parseISO } from "date-fns";
+import {
+  compareAsc,
+  differenceInCalendarDays,
+  format,
+  parseISO,
+} from "date-fns";
 import styled from "styled-components";
 import millify from "millify";
 import MapLayout from "layouts/MapLayout";
@@ -39,21 +44,22 @@ const Map = ({ indicator, countries, observations, bounds, indicators }) => {
 
   const getTimeseries = useCallback(
     (countryId) => {
-      console.log("getting series");
-
       const countryData = observations[countryId];
       return Object.keys(countryData)
         .map((key) => {
           if (key === "latestDate" || key === "latest") return;
 
           return {
-            date: key,
+            step: differenceInCalendarDays(
+              parseISO(key),
+              parseISO(bounds.startDate)
+            ),
             [countryId]: countryData[key],
           };
         })
         .filter(Boolean);
     },
-    [observations]
+    [observations, bounds.startDate]
   );
 
   const getApproximateCountryValue = useCallback(

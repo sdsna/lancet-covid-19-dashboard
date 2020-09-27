@@ -43,6 +43,9 @@ export const MapStoreProvider = ({
       get isPlaying() {
         return store.player !== null;
       },
+      stepIdToDateObject: (stepId) => {
+        return add(store.startDate, { days: stepId });
+      },
       playOrPause() {
         if (store.isPlaying) store.pause();
         else store.play();

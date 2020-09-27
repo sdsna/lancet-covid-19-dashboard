@@ -2,6 +2,7 @@ import { observer, Observer } from "mobx-react-lite";
 import { Box, Divider, IconButton, Typography } from "@material-ui/core";
 import { Close } from "mdi-material-ui";
 import styled from "styled-components";
+import { format } from "date-fns";
 import DrawerSection from "components/DrawerSection";
 import DrawerHeading from "components/DrawerHeading";
 import DrawerHeadingWithCaption from "components/DrawerHeadingWithCaption";
@@ -65,10 +66,13 @@ const CountryInfo = observer(
           chartData={timeseries}
           countryName={name}
           countryId={id}
-          activeDate={mapStore.activeDate}
-          onClick={(data, index) =>
-            mapStore.setActiveDateString(data.activeLabel)
+          activeStep={mapStore.currentStep}
+          // Do not include latest in timeseries chart
+          steps={mapStore.stepCount - 1}
+          stepFormatter={(stepId) =>
+            format(mapStore.stepIdToDateObject(stepId), "PP")
           }
+          onClick={(data, index) => mapStore.selectStep(data.activeLabel)}
           gray
         />
       </>
@@ -87,6 +91,7 @@ const MapDrawer = observer(
     getTimeseries,
   }) => {
     const uiStore = useStore();
+    const mapStore = useMapStore();
     const countryId = uiStore.target;
 
     return (

@@ -45,15 +45,25 @@ const IndicatorTimeseries = ({
   chartData,
   countryId,
   countryName,
-  activeDate,
+  activeStep,
   onClick,
+  steps,
+  stepFormatter,
   ...otherProps
 }) => (
   <DrawerSection {...otherProps}>
     <ResponsiveContainer height={200} key={countryId}>
       <LineChart data={chartData} onClick={onClick}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="date" height={20} tick={{ fontSize: ".7rem" }} />
+        <XAxis
+          type="number"
+          allowDecimals={false}
+          domain={[0, steps]}
+          dataKey="step"
+          height={20}
+          tick={{ fontSize: ".7rem" }}
+          tickFormatter={stepFormatter}
+        />
         <YAxis
           width={40}
           domain={[0, "auto"]}
@@ -61,9 +71,10 @@ const IndicatorTimeseries = ({
           tickFormatter={(tick) => millify(tick)}
           tick={{ fontSize: ".7rem", width: 60 }}
         />
-        <ReferenceLine x={activeDate} stroke="orange" />
+        <ReferenceLine x={activeStep} stroke="orange" />
         <Tooltip
           separator={": "}
+          labelFormatter={stepFormatter}
           content={(props) => renderTooltip({ props, countryName })}
           isAnimationActive={false}
         />
