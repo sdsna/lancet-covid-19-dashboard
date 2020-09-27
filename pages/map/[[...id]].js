@@ -86,6 +86,8 @@ const Map = ({ indicator, countries, observations, bounds, indicators }) => {
         />
       }
       mobileMenuLabel={indicator.id}
+      startDate={bounds.startDate}
+      endDate={bounds.endDate}
     >
       <MapPane
         data={observations}

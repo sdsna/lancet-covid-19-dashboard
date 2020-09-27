@@ -66,7 +66,9 @@ const CountryInfo = observer(
           countryName={name}
           countryId={id}
           activeDate={mapStore.activeDate}
-          // onClick={(data, index) => mapStore.setActiveDate(data.activeLabel)}
+          onClick={(data, index) =>
+            mapStore.setActiveDateString(data.activeLabel)
+          }
           gray
         />
       </>
