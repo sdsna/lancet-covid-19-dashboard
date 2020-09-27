@@ -1,6 +1,9 @@
 import dynamic from "next/dynamic";
-import { Box } from "@material-ui/core";
+import { Box, Hidden } from "@material-ui/core";
+import MapControls from "components/MapControls";
+import MapDateSlider from "components/MapDateSlider";
 import MapZoomControls from "components/MapZoomControls";
+import MapFooter from "components/MapFooter";
 
 const MapSvg = dynamic(() => import("components/MapSvg"), { ssr: false });
 
@@ -12,7 +15,7 @@ const endDrag = (event) => {
   event.currentTarget.style.cursor = "grab";
 };
 
-const MapPane = ({ data }) => (
+const MapPane = ({ data, colorScale, startDate, endDate }) => (
   <Box display="flex" flexGrow="1" position="relative">
     <Box
       display="flex"
@@ -22,9 +25,17 @@ const MapPane = ({ data }) => (
       onMouseUp={endDrag}
       onMouseLeave={endDrag}
     >
-      <MapSvg data={data} />
+      <MapSvg data={data} colorScale={colorScale} />
     </Box>
-    <MapZoomControls />
+    <MapControls>
+      <Box display="flex">
+        <MapDateSlider startDateString={startDate} endDateString={endDate} />
+        <MapZoomControls />
+      </Box>
+      <Hidden implementation="css" only="xs">
+        <MapFooter />
+      </Hidden>
+    </MapControls>
   </Box>
 );
 

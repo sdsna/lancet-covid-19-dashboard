@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { scaleLinear } from "d3-scale";
+import { compareAsc, format, parseISO } from "date-fns";
 import styled from "styled-components";
 import millify from "millify";
 import MapLayout from "layouts/MapLayout";
@@ -11,42 +12,43 @@ import getIndicatorProps from "helpers/getIndicatorProps";
 import getCountryFlagPath from "helpers/getCountryFlagPath";
 
 const Map = ({ indicator, countries, observations, bounds, indicators }) => {
-  const [mapData, setMapData] = useState([]);
-
   const getCountryName = useCallback((countryId) => countries[countryId], [
     countries,
   ]);
 
   const getCountryDate = useCallback(
-    (countryId) => {
-      const countryData = mapData.find((data) => data.countryId === countryId);
-      return countryData?.date;
+    ({ countryId, date }) => {
+      if (date === "latest")
+        return `${observations[countryId]["latestDate"]} (latest value)`;
+
+      return date;
     },
-    [mapData]
+    [observations]
   );
 
   const getCountryValue = useCallback(
-    (countryId) => {
-      const countryData = mapData.find((data) => data.countryId === countryId);
-      const value = countryData?.value;
+    ({ countryId, date }) => {
+      const value = observations[countryId][date];
 
       if (value != null) return Number(value).toLocaleString();
 
       return "No value";
     },
-    [mapData]
+    [observations]
   );
 
   const getTimeseries = useCallback(
     (countryId) => {
+      console.log("getting series");
+
       const countryData = observations[countryId];
       return Object.keys(countryData)
-        .map((date) => {
-          if (date === "latestDate") return;
+        .map((key) => {
+          if (key === "latestDate" || key === "latest") return;
 
           return {
-            date,
-            [countryId]: countryData[date],
+            date: key,
+            [countryId]: countryData[key],
           };
         })
         .filter(Boolean);
@@ -55,39 +57,20 @@ const Map = ({ indicator, countries, observations, bounds, indicators }) => {
   );
 
   const getApproximateCountryValue = useCallback(
-    (countryId) => {
-      const countryData = mapData.find((data) => data.countryId === countryId);
-      const value = countryData?.value;
+    ({ countryId, date }) => {
+      const value = observations[countryId][date];
 
       if (value != null) return millify(value);
 
       return "No value";
     },
-    [mapData]
+    [observations]
   );
 
-  useEffect(() => {
-    const { max, min } = bounds;
-
-    const colorScale = scaleLinear()
-      .domain([min, max])
-      .range(["#bbe4fd", "#0084d5"])
-      .clamp(true);
-
-    const data = Object.keys(observations).map((id) => {
-      const latestDate = observations[id]["latestDate"];
-      const value = parseFloat(observations[id][latestDate]);
-
-      return {
-        countryId: id,
-        fill: colorScale(value),
-        value,
-        date: latestDate,
-      };
-    });
-
-    setMapData(data);
-  }, [observations, indicator, bounds]);
+  const colorScale = scaleLinear()
+    .domain([bounds.min, bounds.max])
+    .range(["#bbe4fd", "#0084d5"])
+    .clamp(true);
 
   return (
     <MapLayout
@@ -104,7 +87,12 @@ const Map = ({ indicator, countries, observations, bounds, indicators }) => {
       }
       mobileMenuLabel={indicator.id}
     >
-      <MapPane data={mapData} />
+      <MapPane
+        data={observations}
+        colorScale={colorScale}
+        startDate={bounds.startDate}
+        endDate={bounds.endDate}
+      />
       <MapTooltip
         getImage={getCountryFlagPath}
         getLabel={getCountryName}
@@ -143,11 +131,28 @@ export async function getStaticProps({ params }) {
     indicatorId
   );
 
-  // Add latest date to each country
+  // Evaluate start and end Date
+  const dateStrings = [
+    ...new Set(
+      Object.values(observations).flatMap((dataPoints) =>
+        Object.keys(dataPoints)
+      )
+    ),
+  ];
+  const dates = dateStrings.map((string) => parseISO(string)).sort(compareAsc);
+  let startDate = null,
+    endDate = null;
+  if (dates.length > 0) {
+    startDate = format(dates[0], "yyyy-MM-dd");
+    endDate = format(dates[dates.length - 1], "yyyy-MM-dd");
+  }
+
+  // Add latest date and latest value to each country
   Object.keys(observations).forEach((countryId) => {
-    observations[countryId]["latestDate"] = Object.keys(observations[countryId])
-      .sort()
-      .pop();
+    const latestDate = Object.keys(observations[countryId]).sort().pop();
+
+    observations[countryId]["latest"] = observations[countryId][latestDate];
+    observations[countryId]["latestDate"] = latestDate;
   });
 
   // Evaluate max and min values for indicator based on latest date
@@ -167,6 +172,8 @@ export async function getStaticProps({ params }) {
       bounds: {
         max,
         min,
+        startDate,
+        endDate,
       },
       indicators,
     },

@@ -5,6 +5,7 @@ const storeContext = React.createContext(null);
 
 export const MapStoreProvider = ({ children }) => {
   const store = useLocalStore(() => ({
+    activeDate: null,
     tooltip: null,
     hideTooltip: () => {
       store.tooltip = null;
@@ -24,6 +25,26 @@ export const MapStoreProvider = ({ children }) => {
       };
 
       store.tooltip = { countryId, anchor };
+    },
+    setActiveDate: (dateString) => {
+      store.activeDate = dateString;
+
+      // Construct URLSearchParams object instance from current URL querystring.
+      var queryParams = new URLSearchParams(window.location.search);
+
+      // Set new or modify existing parameter value.
+      if (dateString === "latest") queryParams.delete("date");
+      else queryParams.set("date", dateString);
+
+      // Replace current querystring with the new one.
+      const queryString = queryParams.toString();
+      history.replaceState(
+        null,
+        null,
+        queryString.length > 0
+          ? `?${queryString}`
+          : window.location.href.split("?")[0]
+      );
     },
   }));
   return (

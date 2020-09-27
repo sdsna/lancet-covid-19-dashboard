@@ -34,12 +34,13 @@ const Tooltip = styled(Popper)`
   }
 `;
 
-const MapTooltip = observer(({ getImage, getLabel, getText }) => {
+const MapTooltip = observer(({ getImage, getLabel, getText, observations }) => {
   const mapStore = useMapStore();
 
   if (!mapStore.tooltip) return null;
 
   const countryId = mapStore.tooltip.countryId;
+  const date = mapStore.activeDate;
   const anchor = mapStore.tooltip.anchor;
 
   return (
@@ -74,7 +75,9 @@ const MapTooltip = observer(({ getImage, getLabel, getText }) => {
           <Typography variant="body1" style={{ fontWeight: 500 }}>
             {getLabel(countryId)}
           </Typography>
-          <Typography variant="body2">{getText(countryId)}</Typography>
+          <Typography variant="body2">
+            {getText({ countryId, date })}
+          </Typography>
         </Box>
       </Box>
     </Tooltip>

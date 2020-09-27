@@ -121,9 +121,11 @@ const onSVGReady = (node) => {
   node.style.opacity = "1";
 };
 
-const MapSvgSection = observer(({ data }) => {
+const MapSvgSection = observer(({ data, colorScale }) => {
   const mapStore = useMapStore();
   const uiStore = useStore();
+
+  const activeDate = mapStore.activeDate;
 
   useEffect(() => {
     return () => {
@@ -143,13 +145,13 @@ const MapSvgSection = observer(({ data }) => {
           onMouseMove={noop}
           onMouseLeave={noop}
         />
-        {data.map(({ countryId, fill, disabled }) => (
+        {Object.keys(data).map((countryId) => (
           <SvgProxy
             key={countryId}
             selector={`#${countryId}`}
-            clickable={disabled ? "disabled" : "clickable"}
-            fill={fill}
-            onClick={() => !disabled && uiStore.openDrawer(countryId)}
+            clickable="clickable"
+            fill={colorScale(data[countryId][activeDate]) || "#e1e1e1"}
+            onClick={() => uiStore.openDrawer(countryId)}
             onMouseMove={(event) => mapStore.showTooltip({ event, countryId })}
             onMouseLeave={mapStore.hideTooltip}
           />

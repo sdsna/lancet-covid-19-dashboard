@@ -45,36 +45,37 @@ const IndicatorTimeseries = ({
   chartData,
   countryId,
   countryName,
+  activeDate,
+  onClick,
   ...otherProps
-}) => {
-  return (
-    <DrawerSection {...otherProps}>
-      <ResponsiveContainer height={200} key={countryId}>
-        <LineChart data={chartData}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" height={20} tick={{ fontSize: ".7rem" }} />
-          <YAxis
-            width={40}
-            domain={[0, "auto"]}
-            // Make sure ticks are rounded to max two decimals
-            tickFormatter={(tick) => millify(tick)}
-            tick={{ fontSize: ".7rem", width: 60 }}
-          />
-          <Tooltip
-            separator={": "}
-            content={(props) => renderTooltip({ props, countryName })}
-            isAnimationActive={false}
-          />
-          <Line
-            connectNulls
-            animationDuration={1000}
-            dot={false}
-            dataKey={countryId}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </DrawerSection>
-  );
-};
+}) => (
+  <DrawerSection {...otherProps}>
+    <ResponsiveContainer height={200} key={countryId}>
+      <LineChart data={chartData} onClick={onClick}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="date" height={20} tick={{ fontSize: ".7rem" }} />
+        <YAxis
+          width={40}
+          domain={[0, "auto"]}
+          // Make sure ticks are rounded to max two decimals
+          tickFormatter={(tick) => millify(tick)}
+          tick={{ fontSize: ".7rem", width: 60 }}
+        />
+        <ReferenceLine x={activeDate} stroke="orange" />
+        <Tooltip
+          separator={": "}
+          content={(props) => renderTooltip({ props, countryName })}
+          isAnimationActive={false}
+        />
+        <Line
+          connectNulls
+          animationDuration={1000}
+          dot={false}
+          dataKey={countryId}
+        />
+      </LineChart>
+    </ResponsiveContainer>
+  </DrawerSection>
+);
 
 export default IndicatorTimeseries;
