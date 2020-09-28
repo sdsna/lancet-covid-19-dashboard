@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { observer } from "mobx-react-lite";
+import { observer, Observer } from "mobx-react-lite";
 import { SvgLoader, SvgProxy } from "react-svgmt";
 import svgPanZoom from "svg-pan-zoom";
 import Hammer from "hammerjs";
@@ -125,8 +125,6 @@ const MapSvgSection = observer(({ data, colorScale }) => {
   const mapStore = useMapStore();
   const uiStore = useStore();
 
-  const activeDate = mapStore.activeDate;
-
   useEffect(() => {
     return () => {
       window?.zoomAndPan?.destroy();
@@ -145,17 +143,25 @@ const MapSvgSection = observer(({ data, colorScale }) => {
           onMouseMove={noop}
           onMouseLeave={noop}
         />
-        {Object.keys(data).map((countryId) => (
-          <SvgProxy
-            key={countryId}
-            selector={`#${countryId}`}
-            clickable="clickable"
-            fill={colorScale(data[countryId][activeDate]) || "#e1e1e1"}
-            onClick={() => uiStore.openDrawer(countryId)}
-            onMouseMove={(event) => mapStore.showTooltip({ event, countryId })}
-            onMouseLeave={mapStore.hideTooltip}
-          />
-        ))}
+        <Observer>
+          {() =>
+            Object.keys(data).map((countryId) => (
+              <SvgProxy
+                key={countryId}
+                selector={`#${countryId}`}
+                clickable="clickable"
+                fill={
+                  colorScale(data[countryId][mapStore.activeDate]) || "#e1e1e1"
+                }
+                onClick={() => uiStore.openDrawer(countryId)}
+                onMouseMove={(event) =>
+                  mapStore.showTooltip({ event, countryId })
+                }
+                onMouseLeave={mapStore.hideTooltip}
+              />
+            ))
+          }
+        </Observer>
       </>
     </NormalizedSvg>
   );
