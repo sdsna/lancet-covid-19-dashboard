@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 const fse = require("fs-extra");
 const path = require("path");
-const getIndicators = require("../helpers/getIndicators");
+const INDICATORS = require("../helpers/indicators");
 
 const REPO_URL =
   "https://raw.githubusercontent.com/sdsna/lancet-covid-19-database";
@@ -10,7 +10,7 @@ const main = async () => {
   fse.emptyDirSync(path.join(__dirname, "indicators"));
   fse.remove(path.join(__dirname, "codebook.csv"));
   await downloadCodebook();
-  const indicators = await getIndicators();
+  const indicators = INDICATORS;
   for (let i = 0; i < indicators.length; i++) {
     process.stdout.write(`Downloading ${indicators[i].id} ...`);
     await downloadIndicator(indicators[i].id);

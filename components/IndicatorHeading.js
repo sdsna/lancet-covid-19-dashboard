@@ -10,12 +10,15 @@ const TypographyWithEmphasis = styled(Typography)`
 
 const IndicatorHeading = ({ indicator }) => (
   <>
-    <Typography variant="overline" color="textSecondary">
+    {/* <Typography variant="overline" color="textSecondary">
       {indicator.source}
-    </Typography>
+    </Typography> */}
     <TypographyWithEmphasis variant="body1">
-      {indicator.id}
+      {indicator.name}
     </TypographyWithEmphasis>
+    <Typography variant="caption" color="textSecondary">
+      Click to change indicator.
+    </Typography>
   </>
 );
 

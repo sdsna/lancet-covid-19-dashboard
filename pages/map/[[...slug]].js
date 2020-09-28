@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { scaleLinear } from "d3-scale";
+import { scaleThreshold } from "d3-scale";
 import {
   compareAsc,
   differenceInCalendarDays,
@@ -12,7 +12,7 @@ import MapLayout from "layouts/MapLayout";
 import MapDrawer from "components/MapDrawer";
 import MapPane from "components/MapPane";
 import MapTooltip from "components/MapTooltip";
-import getIndicators from "helpers/getIndicators";
+import INDICATORS from "helpers/indicators";
 import getIndicatorProps from "helpers/getIndicatorProps";
 import getCountryFlagPath from "helpers/getCountryFlagPath";
 
@@ -73,10 +73,14 @@ const Map = ({ indicator, countries, observations, bounds, indicators }) => {
     [observations]
   );
 
-  const colorScale = scaleLinear()
-    .domain([bounds.min, bounds.max])
-    .range(["#bbe4fd", "#0084d5"])
-    .clamp(true);
+  const colorScale = scaleThreshold()
+    .domain([5, 10, 50, 100])
+    .range(["#7cb9e0", "#97bae2", "#f5ad72", "#df6b6c", "#ce2127"]);
+
+  // const colorScale = scaleLinear()
+  //   .domain([bounds.min, bounds.max])
+  //   .range(["#bbe4fd", "#0084d5"])
+  //   .clamp(true);
 
   return (
     <MapLayout
@@ -111,17 +115,15 @@ const Map = ({ indicator, countries, observations, bounds, indicators }) => {
 };
 
 export async function getStaticPaths() {
-  // Fetch list of indicators
-  const indicators = await getIndicators();
-
-  const paths = indicators.map((indicator) => ({
+  // Create one route for each indicator
+  const paths = INDICATORS.map((indicator) => ({
     params: {
-      id: [indicator.id],
+      slug: [indicator.slug],
     },
   }));
 
   // Add one path without indicator ID
-  paths.push({ params: { id: [] } });
+  paths.push({ params: { slug: [] } });
 
   return {
     paths,
@@ -131,12 +133,12 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   // Fetch list of indicators
-  const indicators = await getIndicators();
+  const indicators = INDICATORS;
 
   // Load data for the requested indicator (or the first indicator in the list)
-  const indicatorId = (params.id && params.id[0]) || indicators[0].id;
+  const indicatorSlug = (params.slug && params.slug[0]) || indicators[0].slug;
   const { indicator, countries, observations } = await getIndicatorProps(
-    indicatorId
+    indicatorSlug
   );
 
   // Evaluate start and end Date

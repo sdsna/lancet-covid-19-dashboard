@@ -1,14 +1,21 @@
 import path from "path";
 import csvtojson from "csvtojson";
+import INDICATORS from "helpers/indicators";
 
-const getIndicatorProps = async (indicatorId) => {
+const getIndicatorProps = async (indicatorSlug) => {
+  // Map the slug to the indicator ID
+  const indicatorId = INDICATORS.find(({ slug }) => slug === indicatorSlug)?.id;
+
   // Load the indicator metadata from codebook
   const codebookPath = path.join(process.cwd(), "data", "codebook.csv");
   const codebook = await csvtojson().fromFile(codebookPath);
 
-  const indicator = codebook.find((entry) => entry.indicator === indicatorId);
+  // Combine info from codebook and our internal definitions
+  const indicator = Object.assign(
+    codebook.find((entry) => entry.indicator === indicatorId),
+    INDICATORS.find(({ slug }) => slug === indicatorSlug)
+  );
   delete indicator.indicator;
-  indicator.id = indicatorId;
 
   // Load the indicator CSV file
   const file = path.join(
