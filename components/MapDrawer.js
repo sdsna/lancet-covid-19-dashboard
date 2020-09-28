@@ -111,7 +111,7 @@ const MapDrawer = observer(
             onClose={() => uiStore.clearTarget()}
           />
         ) : (
-          <MapLegend>... (to do)</MapLegend>
+          <MapLegend scale={indicator.scale} />
         )}
         <Divider />
         <IndicatorMetadata

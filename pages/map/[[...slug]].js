@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import { scaleThreshold } from "d3-scale";
 import {
   compareAsc,
   differenceInCalendarDays,
@@ -15,6 +14,7 @@ import MapTooltip from "components/MapTooltip";
 import INDICATORS from "helpers/indicators";
 import getIndicatorProps from "helpers/getIndicatorProps";
 import getCountryFlagPath from "helpers/getCountryFlagPath";
+import getColorScale from "helpers/getColorScale";
 
 const Map = ({ indicator, countries, observations, bounds, indicators }) => {
   const getCountryName = useCallback((countryId) => countries[countryId], [
@@ -73,14 +73,7 @@ const Map = ({ indicator, countries, observations, bounds, indicators }) => {
     [observations]
   );
 
-  const colorScale = scaleThreshold()
-    .domain([5, 10, 50, 100])
-    .range(["#7cb9e0", "#97bae2", "#f5ad72", "#df6b6c", "#ce2127"]);
-
-  // const colorScale = scaleLinear()
-  //   .domain([bounds.min, bounds.max])
-  //   .range(["#bbe4fd", "#0084d5"])
-  //   .clamp(true);
+  const colorScale = getColorScale(indicator.scale);
 
   return (
     <MapLayout
@@ -132,8 +125,12 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  // Fetch list of indicators
-  const indicators = INDICATORS;
+  // Fetch list of indicators, keeping only slug, id, and name
+  const indicators = INDICATORS.map(({ slug, id, name }) => ({
+    slug,
+    id,
+    name,
+  }));
 
   // Load data for the requested indicator (or the first indicator in the list)
   const indicatorSlug = (params.slug && params.slug[0]) || indicators[0].slug;
