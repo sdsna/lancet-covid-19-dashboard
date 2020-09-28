@@ -14,6 +14,7 @@ import { Menu } from "mdi-material-ui";
 import styled from "styled-components";
 import NavBarDrawer from "components/NavBarDrawer";
 import getTheme from "helpers/getTheme";
+import INDICATORS from "helpers/indicators";
 
 const { breakpoints } = getTheme();
 
@@ -26,6 +27,17 @@ const Button = styled(ButtonBase).attrs({
     flex-direction: column;
     align-self: stretch;
     padding: 0 16px;
+  }
+`;
+
+const HoverButton = styled(Button)`
+  && {
+    opacity: 0.7;
+    transition: opacity 0.3s;
+  }
+
+  &&:hover {
+    opacity: 1;
   }
 `;
 
@@ -70,20 +82,10 @@ const DesktopOnlyBox = styled(Box)`
   }
 `;
 
-const pages = [
-  {
-    label: "Link1",
-    href: "/link1",
-  },
-  {
-    label: "Link2",
-    href: "/link2",
-  },
-  {
-    label: "Link3",
-    href: "/link3",
-  },
-];
+const pages = INDICATORS.map((indicator) => ({
+  label: indicator.name,
+  href: `/map/${indicator.slug}`,
+}));
 
 const NavBar = ({ fluid }) => {
   let containerProps = { maxWidth: "lg", style: { padding: "0 8px" } };
@@ -107,11 +109,16 @@ const NavBar = ({ fluid }) => {
                 <Menu />
               </IconButton>
             </Hidden>
-            <Link href="/" passHref>
+            <Button component="a" href="https://covid19commission.org/">
+              <Typography variant="body1" style={{ fontWeight: 700 }}>
+                Lancet Covid-19 Commission
+              </Typography>
+            </Button>
+            {/* <Link href="/" passHref>
               <LogoButton aria-label="Go to home page">
                 <Logo alt="Logo" src="/static/logo.svg" />
               </LogoButton>
-            </Link>
+            </Link> */}
             <Hidden implementation="css" mdUp>
               <IconButton
                 style={{ visibility: "hidden" }}
@@ -131,9 +138,9 @@ const NavBar = ({ fluid }) => {
             <DesktopOnlyBox>
               {pages.map(({ label, href }) => (
                 <Link key={href} href={href} passHref>
-                  <Button>
+                  <HoverButton>
                     <Typography variant="body1">{label}</Typography>
-                  </Button>
+                  </HoverButton>
                 </Link>
               ))}
             </DesktopOnlyBox>
