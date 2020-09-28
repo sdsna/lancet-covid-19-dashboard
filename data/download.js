@@ -25,9 +25,14 @@ const downloadCodebook = async () => {
 };
 
 const downloadIndicator = async (indicatorId) => {
-  const res = await fetch(
-    `${REPO_URL}/master/data/indicators/${indicatorId}.csv`
-  );
+  const url = `${REPO_URL}/master/data/indicators/${indicatorId}.csv`;
+  const res = await fetch(url);
+
+  // Check for errors
+  if (res.status != 200)
+    throw `Could not download indicator ${indicatorId} from ${url}`;
+
+  // Continue
   const text = await res.text();
   fse.writeFileSync(
     path.join(__dirname, "indicators", `${indicatorId}.csv`),

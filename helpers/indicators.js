@@ -11,7 +11,7 @@ const INDICATORS = [
   },
   {
     slug: "effective-reproduction-rate",
-    id: "marioli_effective_reproduction_r",
+    id: "marioli_effective_reproduction_rate",
     name: "Effective Reproduction Rate",
   },
   {
