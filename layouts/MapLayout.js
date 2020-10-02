@@ -7,6 +7,7 @@ const MapLayout = ({
   endDate,
   Drawer,
   mobileMenuLabel,
+  ...otherProps
 }) => (
   <MapStoreProvider startDateString={startDate} endDateString={endDate}>
     <FullScreenLayout
@@ -18,6 +19,7 @@ const MapLayout = ({
       mobileMenuLabel={mobileMenuLabel}
       drawerProps={{ permanent: true }}
       Drawer={Drawer}
+      {...otherProps}
     >
       {children}
     </FullScreenLayout>

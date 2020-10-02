@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import PageSelectionButton from "components/PageSelectionButton";
 
-const MapPageSelectionButton = ({ children, indicators }) => {
+const MapPageSelectionButton = ({ children, indicators, getLink }) => {
   const router = useRouter();
 
   return (
@@ -12,7 +12,7 @@ const MapPageSelectionButton = ({ children, indicators }) => {
       modalTitle="Select an indicator"
       modalDescription="Select an indicator to display on the map."
       onSelect={(indicator) => {
-        router.push(`/map/${indicator.slug}`);
+        router.push(getLink(indicator));
       }}
     >
       {children}

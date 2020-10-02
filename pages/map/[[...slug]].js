@@ -16,7 +16,14 @@ import getIndicatorProps from "helpers/getIndicatorProps";
 import getCountryFlagPath from "helpers/getCountryFlagPath";
 import getColorScale from "helpers/getColorScale";
 
-const Map = ({ indicator, countries, observations, bounds, indicators }) => {
+const Map = ({
+  indicator,
+  countries,
+  observations,
+  bounds,
+  indicators,
+  isEmbedded,
+}) => {
   const getCountryName = useCallback((countryId) => countries[countryId], [
     countries,
   ]);
@@ -85,6 +92,15 @@ const Map = ({ indicator, countries, observations, bounds, indicators }) => {
     [observations]
   );
 
+  const getLink = (indicator) => {
+    let path = `/map/${indicator.slug}`;
+
+    // If in embed mode, add embed
+    if (isEmbedded) path += "/embed";
+
+    return path;
+  };
+
   const colorScale = getColorScale(indicator.scale);
 
   return (
@@ -98,8 +114,10 @@ const Map = ({ indicator, countries, observations, bounds, indicators }) => {
           getCountryValue={getCountryValue}
           getCountryDate={getCountryDate}
           getTimeseries={getTimeseries}
+          getLink={getLink}
         />
       }
+      isEmbedded={isEmbedded}
       mobileMenuLabel={indicator.id}
       startDate={bounds.startDate}
       endDate={bounds.endDate}
@@ -121,11 +139,23 @@ const Map = ({ indicator, countries, observations, bounds, indicators }) => {
 
 export async function getStaticPaths() {
   // Create one route for each indicator
-  const paths = INDICATORS.map((indicator) => ({
-    params: {
-      slug: [indicator.slug],
-    },
-  }));
+  const paths = [];
+
+  INDICATORS.forEach((indicator) => {
+    // Support plain version
+    paths.push({
+      params: {
+        slug: [indicator.slug],
+      },
+    });
+
+    // Support embedded version
+    paths.push({
+      params: {
+        slug: [indicator.slug, "embed"],
+      },
+    });
+  });
 
   // Add one path without indicator ID
   paths.push({ params: { slug: [] } });
@@ -143,6 +173,12 @@ export async function getStaticProps({ params }) {
     id,
     name,
   }));
+
+  // Flag for toggling embed mode
+  let isEmbedded = false;
+  if (params.slug && params.slug[params.slug.length - 1] === "embed") {
+    isEmbedded = true;
+  }
 
   // Load data for the requested indicator (or the first indicator in the list)
   const indicatorSlug = (params.slug && params.slug[0]) || indicators[0].slug;
@@ -195,6 +231,7 @@ export async function getStaticProps({ params }) {
         endDate,
       },
       indicators,
+      isEmbedded,
     },
   };
 }

@@ -27,7 +27,7 @@ const StyledDrawer = styled(Drawer).attrs(({ width, PaperProps }) => ({
 
   &,
   & > div {
-    top: 88px;
+    top: ${(props) => (props.styled.isEmbedded ? "0" : "88px")};
     bottom: 0px;
     height: auto;
     overflow-y: hidden;
@@ -64,7 +64,7 @@ const scrollElementToTop = (elementId) => {
   element.scrollTop = 0;
 };
 
-const AppDrawer = observer(({ children, permanent = false }) => {
+const AppDrawer = observer(({ children, permanent = false, isEmbedded }) => {
   const uiStore = useStore();
 
   // Close and clear drawer when changing route
@@ -121,6 +121,7 @@ const AppDrawer = observer(({ children, permanent = false }) => {
             PaperProps={{
               elevation: 2,
             }}
+            styled={{ isEmbedded }}
           >
             <LeftDrawerBox>{children}</LeftDrawerBox>
           </StyledDrawer>

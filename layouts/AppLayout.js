@@ -14,6 +14,7 @@ const AppLayout = observer(
     drawerProps = {},
     onContentResize = null,
     footer = true,
+    isEmbedded = false,
   }) => {
     const store = useLocalStore(() => ({
       width: null,
@@ -35,9 +36,11 @@ const AppLayout = observer(
 
     return (
       <>
-        <NavBar fluid={fluid} />
+        {isEmbedded ? null : <NavBar fluid={fluid} />}
         <Box display="flex" flexGrow={1} overflow={overflow}>
-          <AppDrawer {...drawerProps}>{Drawer}</AppDrawer>
+          <AppDrawer {...drawerProps} isEmbedded={isEmbedded}>
+            {Drawer}
+          </AppDrawer>
           <Box
             id="content"
             display="flex"

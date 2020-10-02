@@ -90,6 +90,7 @@ const MapDrawer = observer(
     getCountryValue,
     getCountryDate,
     getTimeseries,
+    getLink,
   }) => {
     const uiStore = useStore();
     const mapStore = useMapStore();
@@ -97,7 +98,7 @@ const MapDrawer = observer(
 
     return (
       <>
-        <MapPageSelectionButton indicators={indicators}>
+        <MapPageSelectionButton indicators={indicators} getLink={getLink}>
           <IndicatorHeading indicator={indicator} />
         </MapPageSelectionButton>
         <Divider />
