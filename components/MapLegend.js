@@ -1,3 +1,4 @@
+import { createElement } from "react";
 import DrawerSection from "components/DrawerSection";
 import DrawerHeadingWithCaption from "components/DrawerHeadingWithCaption";
 import MapLegendItem from "components/MapLegendItem";
@@ -15,18 +16,38 @@ const getLegendLabel = (domain, index) => {
   return [domain[index - 1], domain[index]].sort((a, b) => a - b).join(" — ");
 };
 
+const MapLegendThreshold = ({ range, domain }) => (
+  <>
+    {range.map((color, index) => (
+      <MapLegendItem
+        key={index}
+        color={color}
+        label={getLegendLabel(domain, index)}
+      />
+    ))}
+  </>
+);
+
+const MapLegendOrdinal = ({ categories, missingColor }) => (
+  <>
+    {categories.map(({ value, color, label }) => (
+      <MapLegendItem key={value} color={color} label={label} />
+    ))}
+    <MapLegendItem color={missingColor} label="Missing Data" />
+  </>
+);
+
+const LEGENDS = {
+  ordinal: MapLegendOrdinal,
+  threshold: MapLegendThreshold,
+};
+
 const MapLegend = ({ scale }) => (
   <DrawerSection>
     <DrawerHeadingWithCaption caption="Click on a country to see its performance.">
       Legend
     </DrawerHeadingWithCaption>
-    {scale.range.map((color, index) => (
-      <MapLegendItem
-        key={index}
-        color={color}
-        label={getLegendLabel(scale.domain, index)}
-      />
-    ))}
+    {createElement(LEGENDS[scale.type], { ...scale })}
   </DrawerSection>
 );
 

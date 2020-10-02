@@ -35,7 +35,13 @@ const Map = ({ indicator, countries, observations, bounds, indicators }) => {
     ({ countryId, date }) => {
       const value = observations[countryId][date];
 
-      if (value != null) return Number(value).toLocaleString();
+      if (value != null) {
+        const { scale } = indicator;
+
+        if (scale.type === "threshold") return Number(value).toLocaleString();
+        if (scale.type === "ordinal")
+          return scale.categories.find((c) => c.value === value).label;
+      }
 
       return "No value";
     },
@@ -66,7 +72,13 @@ const Map = ({ indicator, countries, observations, bounds, indicators }) => {
     ({ countryId, date }) => {
       const value = observations[countryId][date];
 
-      if (value != null) return millify(value);
+      if (value != null) {
+        const { scale } = indicator;
+
+        if (scale.type === "threshold") return millify(value);
+        if (scale.type === "ordinal")
+          return scale.categories.find((c) => c.value === value).label;
+      }
 
       return "No value";
     },

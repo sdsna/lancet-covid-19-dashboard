@@ -22,7 +22,7 @@ const TypographyWithEmphasis = styled(Typography)`
 `;
 
 const CountryInfo = observer(
-  ({ id, name, flagPath, getValue, getDate, timeseries, onClose }) => {
+  ({ id, name, flagPath, getValue, getDate, scale, timeseries, onClose }) => {
     const mapStore = useMapStore();
 
     return (
@@ -67,6 +67,7 @@ const CountryInfo = observer(
           countryName={name}
           countryId={id}
           activeStep={mapStore.currentStep}
+          scale={scale}
           // Do not include latest in timeseries chart
           steps={mapStore.stepCount - 1}
           stepFormatter={(stepId) =>
@@ -108,6 +109,7 @@ const MapDrawer = observer(
             getValue={getCountryValue}
             getDate={getCountryDate}
             timeseries={getTimeseries(countryId)}
+            scale={indicator.scale}
             onClose={() => uiStore.clearTarget()}
           />
         ) : (

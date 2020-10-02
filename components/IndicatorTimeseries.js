@@ -41,6 +41,18 @@ const renderTooltip = ({ props, countryName }) => {
   return <DefaultTooltipContent {...props} />;
 };
 
+const getDomain = (scale) => {
+  if (scale.type === "ordinal") {
+    const sortedValues = scale.categories
+      .map((c) => c.value)
+      .sort((a, b) => a - b);
+
+    return [sortedValues[0], sortedValues[sortedValues.length - 1]];
+  }
+
+  if (scale.type === "threshold") return [0, "auto"];
+};
+
 const IndicatorTimeseries = ({
   chartData,
   countryId,
@@ -49,6 +61,7 @@ const IndicatorTimeseries = ({
   onClick,
   steps,
   stepFormatter,
+  scale,
   ...otherProps
 }) => (
   <DrawerSection {...otherProps}>
@@ -66,7 +79,7 @@ const IndicatorTimeseries = ({
         />
         <YAxis
           width={40}
-          domain={[0, "auto"]}
+          domain={getDomain(scale)}
           // Make sure ticks are rounded to max two decimals
           tickFormatter={(tick) => millify(tick)}
           tick={{ fontSize: ".7rem", width: 60 }}
