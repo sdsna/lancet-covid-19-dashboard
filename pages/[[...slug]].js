@@ -118,7 +118,7 @@ const Map = ({
         />
       }
       isEmbedded={isEmbedded}
-      mobileMenuLabel={indicator.id}
+      mobileMenuLabel={indicator.name}
       startDate={bounds.startDate}
       endDate={bounds.endDate}
     >
