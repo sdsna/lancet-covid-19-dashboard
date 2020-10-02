@@ -84,7 +84,7 @@ const DesktopOnlyBox = styled(Box)`
 
 const pages = INDICATORS.map((indicator) => ({
   label: indicator.name,
-  href: `/map/${indicator.slug}`,
+  href: `/${indicator.slug}`,
 }));
 
 const NavBar = ({ fluid }) => {

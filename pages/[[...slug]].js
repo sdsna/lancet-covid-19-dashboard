@@ -93,7 +93,7 @@ const Map = ({
   );
 
   const getLink = (indicator) => {
-    let path = `/map/${indicator.slug}`;
+    let path = `/${indicator.slug}`;
 
     // If in embed mode, add embed
     if (isEmbedded) path += "/embed";

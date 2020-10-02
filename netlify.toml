@@ -1,3 +1,12 @@
 [build]
   command = "npm run download && npm run build && npm run export"
   publish = "out"
+
+# Redirect from old path /map to new /
+[[redirects]]
+  from  = "/map/*"
+  to    = "/:splat"
+
+[[redirects]]
+  from  = "/map"
+  to    = "/"
