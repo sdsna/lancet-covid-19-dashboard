@@ -1,5 +1,6 @@
 import path from "path";
 import csvtojson from "csvtojson";
+import { readJsonSync } from "fs-extra";
 import INDICATORS from "helpers/indicators";
 
 const getIndicatorProps = async (indicatorSlug) => {
@@ -16,6 +17,15 @@ const getIndicatorProps = async (indicatorSlug) => {
     INDICATORS.find(({ slug }) => slug === indicatorSlug)
   );
   delete indicator.indicator;
+
+  // Add extraction timestamp
+  const extractionTimestampPath = path.join(
+    process.cwd(),
+    "data",
+    "last-extraction.json"
+  );
+  const extractionMetadata = readJsonSync(extractionTimestampPath);
+  indicator.extractedAt = extractionMetadata["message"];
 
   // Load the indicator CSV file
   const file = path.join(

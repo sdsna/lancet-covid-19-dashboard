@@ -9,6 +9,7 @@ const REPO_URL =
 const main = async () => {
   fse.emptyDirSync(path.join(__dirname, "indicators"));
   fse.remove(path.join(__dirname, "codebook.csv"));
+  await downloadExtractionTimestamp();
   await downloadCodebook();
   const indicators = INDICATORS;
   for (let i = 0; i < indicators.length; i++) {
@@ -16,6 +17,16 @@ const main = async () => {
     await downloadIndicator(indicators[i].id);
     console.log("Done!");
   }
+};
+
+const downloadExtractionTimestamp = async () => {
+  const res = await fetch(`${REPO_URL}/master/badges/last-extraction.json`);
+
+  // Check for errors
+  if (res.status != 200) throw "Could not download latest extraction timestamp";
+
+  const text = await res.text();
+  fse.writeFileSync(path.join(__dirname, "last-extraction.json"), text);
 };
 
 const downloadCodebook = async () => {

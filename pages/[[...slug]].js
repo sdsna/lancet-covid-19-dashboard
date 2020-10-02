@@ -127,6 +127,7 @@ const Map = ({
         colorScale={colorScale}
         startDate={bounds.startDate}
         endDate={bounds.endDate}
+        extractedAt={indicator.extractedAt}
       />
       <MapTooltip
         getImage={getCountryFlagPath}
