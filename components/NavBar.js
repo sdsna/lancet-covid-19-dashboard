@@ -101,24 +101,23 @@ const NavBar = ({ fluid }) => {
         <Container {...containerProps} disableGutters={true}>
           <StyledToolbar disableGutters={true}>
             <Hidden implementation="css" mdUp>
-              <IconButton
-                color="inherit"
-                aria-label="menu"
-                onClick={toggleNavDrawer}
-              >
-                <Menu />
-              </IconButton>
+              <Box display="flex">
+                <IconButton
+                  color="inherit"
+                  aria-label="menu"
+                  onClick={toggleNavDrawer}
+                >
+                  <Menu />
+                </IconButton>
+                <Link href="/" passHref>
+                  <HoverButton>
+                    <Typography variant="body1" style={{ fontWeight: 700 }}>
+                      COVID-19 Data Platform
+                    </Typography>
+                  </HoverButton>
+                </Link>
+              </Box>
             </Hidden>
-            <Button component="a" href="https://covid19commission.org/">
-              <Typography variant="body1" style={{ fontWeight: 700 }}>
-                Lancet COVID-19 Commission
-              </Typography>
-            </Button>
-            {/* <Link href="/" passHref>
-              <LogoButton aria-label="Go to home page">
-                <Logo alt="Logo" src="/static/logo.svg" />
-              </LogoButton>
-            </Link> */}
             <Hidden implementation="css" mdUp>
               <IconButton
                 style={{ visibility: "hidden" }}
@@ -136,6 +135,13 @@ const NavBar = ({ fluid }) => {
               />
             </Hidden>
             <DesktopOnlyBox>
+              <Link href="/" passHref>
+                <HoverButton>
+                  <Typography variant="body1" style={{ fontWeight: 700 }}>
+                    Home
+                  </Typography>
+                </HoverButton>
+              </Link>
               {pages.map(({ label, href }) => (
                 <Link key={href} href={href} passHref>
                   <HoverButton>
