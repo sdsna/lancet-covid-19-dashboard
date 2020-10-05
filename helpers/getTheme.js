@@ -1,4 +1,5 @@
 import { createMuiTheme, responsiveFontSizes } from "@material-ui/core";
+import blue from "@material-ui/core/colors/blue";
 
 const theme = createMuiTheme({
   palette: {
@@ -7,6 +8,9 @@ const theme = createMuiTheme({
     },
     secondary: {
       main: "#000",
+    },
+    link: {
+      main: blue,
     },
   },
   breakpoints: {

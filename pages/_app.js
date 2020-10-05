@@ -39,7 +39,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>COVID-19 Data Portal for the Lancet COVID-19 Commission</title>
+        <title>COVID-19 Data Portal of the Lancet COVID-19 Commission</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"

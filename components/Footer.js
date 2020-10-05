@@ -13,11 +13,7 @@ const FooterTypography = styled(Typography).attrs({
 
 const FooterLink = styled.a`
   color: #fff;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
+  font-weight: 500;
 `;
 
 const ResponsiveGridItem = styled(Grid).attrs({
@@ -57,20 +53,29 @@ const Footer = () => {
     <BoxWithShadow marginTop={8} paddingY={8} position="relative" theme={theme}>
       <Container maxWidth="lg">
         <Grid container>
-          <ResponsiveGridItem styled={{ width: 1 / 3 }}>
-            <Logo
-              alt="Logo"
-              src="/static/logo.svg"
-              style={{ height: 80, marginBottom: 8 }}
-            />
-          </ResponsiveGridItem>
-          <ResponsiveGridItem styled={{ width: 2 / 3 }}>
+          <ResponsiveGridItem styled={{ width: 3 / 3 }}>
             <FooterTypography gutterBottom>
-              This is the data portal of the Lancet Commission on COVID-19. The
-              data portal is updated every day. It provides access to the latest
-              data available on COVID-19 new cases, death rate, test rate and
-              other valuable data to gauge the transmission and response to the
-              pandemic. Data are pooled from difference sources.
+              This is the data portal of the{" "}
+              <FooterLink href="https://covid19commission.org/" target="_blank">
+                Lancet Commission on COVID-19
+              </FooterLink>
+              . The data portal is updated daily from Monday to Friday. It
+              provides access to the latest data available on COVID-19, such as
+              new cases, deaths, positive test rate, and other valuable data to
+              gauge the transmission and response to the pandemic. Data is
+              pooled from different sources, including Johns Hopkins University,
+              Our World in Data, Oxford, YouGov, and Google.
+            </FooterTypography>
+            <FooterTypography>
+              For questions, comments, and suggestions, please contact{" "}
+              <FooterLink href="mailto:finn.woelm@unsdsn.org" target="_blank">
+                finn.woelm@unsdsn.org
+              </FooterLink>{" "}
+              or{" "}
+              <FooterLink href="mailto:ime2111@columbia.edu" target="_blank">
+                ime2111@columbia.edu
+              </FooterLink>
+              .
             </FooterTypography>
           </ResponsiveGridItem>
         </Grid>

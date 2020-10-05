@@ -98,14 +98,6 @@ const Subtitle = styled(Typography).attrs({
   }
 `;
 
-const StyledLink = styled(Typography).attrs({
-  compontent: "a",
-  color: "primary",
-})`
-  text-decoration: none;
-  font-weight: 500;
-`;
-
 const Index = ({ countries }) => (
   <AppLayout>
     <Container style={{ position: "relative" }}>
@@ -129,7 +121,7 @@ const Index = ({ countries }) => (
               <Box>
                 <Title color="primary">COVID-19 Data Portal</Title>
                 <Subtitle color="secondary">
-                  for the Lancet COVID-19 Commission
+                  of the Lancet COVID-19 Commission
                 </Subtitle>
               </Box>
               <Box marginTop={3}>
@@ -157,7 +149,7 @@ const Index = ({ countries }) => (
               </Box>
             </Box>
           </Grid>
-          <Grid item lg={5} md={4} xs={0}>
+          <Grid item lg={5} md={4} xs={false}>
             <Hidden implementation="css" smDown>
               <AnimatedWorldSvg style={{ maxWidth: "100%", height: "auto" }} />
             </Hidden>
@@ -169,20 +161,30 @@ const Index = ({ countries }) => (
           About
         </Typography>
         <Typography variant="body1" gutterBottom>
-          This is the data portal of the Lancet Commission on COVID-19. The data
-          portal is updated every day. It provides access to the latest data
-          available on COVID-19 new cases, death rate, test rate and other
-          valuable data to gauge the transmission and response to the pandemic.
-          Data are pooled from difference sources.
+          This is the data portal of the{" "}
+          <a href="https://covid19commission.org/" target="_blank">
+            Lancet Commission on COVID-19
+          </a>
+          . The data portal is updated daily from Monday to Friday. It provides
+          access to the latest data available on COVID-19, such as new cases,
+          deaths, positive test rate, and other valuable data to gauge the
+          transmission and response to the pandemic. Data is pooled from
+          different sources, including Johns Hopkins University, Our World in
+          Data, Oxford, YouGov, and Google.
+        </Typography>
+      </Box>
+      <Box marginTop={5}>
+        <Typography variant="h2" style={{ fontWeight: 500 }} gutterBottom>
+          COVID-19 Overall Transmission
         </Typography>
         <Typography variant="body1">
-          Based on the methodology described in Lancet COVID-19 Commission
-          Statement on the occasion of the 75th session of the UN General
-          Assembly we update every day an assessment of the overall transmission
-          of the virus to gauge which countries have suppressed the virus and
-          which countries are struggling to suppress the spread of COVID-19. It
-          is based on five key measures: New cases per million, New death per
-          million, Tests per case and the Effective Reproduction Rate.
+          The map below shows an assessment of the overall transmission of
+          COVID-19, showing which countries have suppressed the virus and where
+          COVID-19 is spreading. The assessment is based on the methodology
+          described in Lancet COVID-19 Commission Statement on the occasion of
+          the 75th session of the UN General Assembly. It is based on two key
+          measures: new cases per million and tests per case. The assessment is
+          updated daily from Monday to Friday.
         </Typography>
         <Box marginY={3}>
           <iframe
