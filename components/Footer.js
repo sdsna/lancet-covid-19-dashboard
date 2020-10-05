@@ -63,12 +63,11 @@ const Footer = () => (
         </ResponsiveGridItem>
         <ResponsiveGridItem styled={{ width: 2 / 3 }}>
           <FooterTypography gutterBottom>
-            Nullam imperdiet nunc eros, quis laoreet nisi cursus at. Suspendisse
-            potenti. Vivamus sed metus non metus luctus placerat. Pellentesque
-            vel auctor lacus. Phasellus sit amet pellentesque lacus. Curabitur
-            accumsan interdum risus vitae condimentum. Maecenas at dui dolor.
-            Mauris at orci a lectus tristique efficitur ut ac sem. Nullam mattis
-            varius arcu, sed placerat nisl venenatis vel.
+            This is the data portal of the Lancet Commission on COVID-19. The
+            data portal is updated every day. It provides access to the latest
+            data available on COVID-19 new cases, death rate, test rate and
+            other valuable data to gauge the transmission and response to the
+            pandemic. Data are pooled from difference sources.
           </FooterTypography>
         </ResponsiveGridItem>
       </Grid>
