@@ -66,9 +66,9 @@ const INDICATORS = [
     },
   },
   {
-    slug: "positive-rate",
+    slug: "positive-test-rate",
     id: "owid_positive_rate",
-    name: "Positive Rate",
+    name: "Positive Test Rate",
     scale: {
       type: "threshold",
       domain: [0.01, 0.02, 0.05, 0.1],
