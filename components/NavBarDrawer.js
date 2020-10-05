@@ -12,7 +12,7 @@ import getTheme from "helpers/getTheme";
 const { palette } = getTheme();
 
 const NavBarDrawer = ({ pages, ...otherProps }) => (
-  <Drawer {...otherProps}>
+  <Drawer {...otherProps} PaperProps={{ style: { maxWidth: "80%" } }}>
     <List disablePadding>
       <ListItem
         button
