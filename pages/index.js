@@ -34,7 +34,6 @@ const Title = styled(Typography).attrs({
 })`
   && {
     font-weight: 700;
-    color: #1d3d7b;
   }
 `;
 
@@ -149,7 +148,7 @@ const Index = ({ countries }) => (
               height="100%"
             >
               <Box style={{ background: "#fafafa91" }}>
-                <Title>COVID-19 Data Portal</Title>
+                <Title color="primary">COVID-19 Data Portal</Title>
                 <Subtitle color="secondary">
                   <span>for the Lancet COVID-19 Commission</span>
                 </Subtitle>
@@ -167,7 +166,7 @@ const Index = ({ countries }) => (
                   </Button>
                 </Box>
                 <Box marginY={1}>
-                  <Button size="large" color="secondary" variant="contained">
+                  <Button size="large" color="secondary" variant="outlined">
                     Explore Maps
                   </Button>
                 </Box>

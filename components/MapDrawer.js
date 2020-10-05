@@ -1,5 +1,6 @@
 import { observer, Observer } from "mobx-react-lite";
 import { Box, Divider, IconButton, Typography } from "@material-ui/core";
+import { useTheme } from "@material-ui/core/styles";
 import { Close } from "mdi-material-ui";
 import styled from "styled-components";
 import { format } from "date-fns";
@@ -24,6 +25,7 @@ const TypographyWithEmphasis = styled(Typography)`
 const CountryInfo = observer(
   ({ id, name, getValue, getDate, scale, timeseries, onClose }) => {
     const mapStore = useMapStore();
+    const theme = useTheme();
 
     return (
       <>
@@ -59,6 +61,8 @@ const CountryInfo = observer(
           countryId={id}
           activeStep={mapStore.currentStep}
           scale={scale}
+          primaryColor={theme.palette.secondary.main}
+          secondaryColor={theme.palette.primary.main}
           // Do not include latest in timeseries chart
           steps={mapStore.stepCount - 1}
           stepFormatter={(stepId) =>

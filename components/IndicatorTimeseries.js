@@ -60,6 +60,8 @@ const IndicatorTimeseries = ({
   activeStep,
   onClick,
   steps,
+  primaryColor,
+  secondaryColor,
   stepFormatter,
   scale,
   ...otherProps
@@ -84,7 +86,7 @@ const IndicatorTimeseries = ({
           tickFormatter={(tick) => millify(tick)}
           tick={{ fontSize: ".7rem", width: 60 }}
         />
-        <ReferenceLine x={activeStep} stroke="orange" />
+        <ReferenceLine x={activeStep} stroke={secondaryColor} />
         <Tooltip
           separator={": "}
           labelFormatter={stepFormatter}
@@ -95,6 +97,7 @@ const IndicatorTimeseries = ({
           connectNulls
           animationDuration={1000}
           dot={false}
+          stroke={primaryColor}
           dataKey={countryId}
         />
       </LineChart>

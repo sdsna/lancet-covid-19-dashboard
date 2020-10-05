@@ -5,14 +5,7 @@ import { Box, ButtonBase, Divider, Slider, Tooltip } from "@material-ui/core";
 import { Pause, Play } from "mdi-material-ui";
 import Link from "next/link";
 import { format } from "date-fns";
-import styled from "styled-components";
 import { useMapStore } from "helpers/mapStore";
-
-const StyledSlider = styled(Slider)`
-  && {
-    color: #0267d2;
-  }
-`;
 
 function ValueLabelComponent(props) {
   const { children, open, value } = props;
@@ -79,7 +72,7 @@ const MapDateSlider = observer((props) => {
       </ButtonBase>
       <Divider orientation="vertical" flexItem />
       <Box display="flex" flexGrow={1} paddingX={2}>
-        <StyledSlider
+        <Slider
           value={mapStore.currentStep}
           min={0}
           step={1}

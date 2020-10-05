@@ -97,7 +97,7 @@ const NavBar = ({ fluid }) => {
 
   return (
     <>
-      <AppBar position="fixed">
+      <AppBar position="fixed" color="secondary">
         <Container {...containerProps} disableGutters={true}>
           <StyledToolbar disableGutters={true}>
             <Hidden implementation="css" mdUp>
