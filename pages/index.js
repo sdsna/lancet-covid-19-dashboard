@@ -1,22 +1,72 @@
-import { useEffect } from "react";
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import {
   Box,
   Button,
   Container,
   Grid,
-  SvgIcon,
+  Hidden,
   Typography,
 } from "@material-ui/core";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import AppLayout from "layouts/AppLayout";
 import contentSizeQuery from "helpers/contentSizeQuery";
 import WorldSvg from "static/undraw_connected_world_wuay.svg";
 
-// const ParticlesSection = dynamic(() => import('sections/index/ParticlesSection'), { ssr: false })
-
 const transition = "250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms";
+
+const animateStrokeDashOffset = keyframes`
+  from {
+    stroke-dashoffset: 0%;
+  }
+
+  to {
+    stroke-dashoffset: 100%;
+  }
+`;
+
+const animateStrokeWidth = keyframes`
+  0% {
+    stroke-width: 0;
+  }
+
+  5% {
+    stroke-width: 10;
+  }
+
+  10%, 100% {
+    stroke-width: 0;
+  }
+`;
+
+const AnimatedWorldSvg = styled(WorldSvg)`
+  .connections {
+    animation: ${animateStrokeDashOffset} 100s linear infinite;
+  }
+
+  .circles {
+    stroke: black;
+
+    circle:nth-of-type(1) {
+      animation: ${animateStrokeWidth} 5s linear infinite 1s;
+    }
+
+    circle:nth-of-type(2) {
+      animation: ${animateStrokeWidth} 5s linear infinite 1.1s;
+    }
+
+    circle:nth-of-type(3) {
+      animation: ${animateStrokeWidth} 5s linear infinite 1.9s;
+    }
+
+    circle:nth-of-type(4) {
+      animation: ${animateStrokeWidth} 5s linear infinite 2s;
+    }
+
+    circle:nth-of-type(5) {
+      animation: ${animateStrokeWidth} 5s linear infinite 1.5s;
+    }
+  }
+`;
 
 const Hero = styled(Box)`
   padding-top: 30px;
@@ -44,91 +94,20 @@ const Subtitle = styled(Typography).attrs({
   && {
     opacity: 0.75;
     line-height: 1;
-
-    span {
-      font-weight: 500;
-      /* font-size: 0.75em; */
-    }
+    font-weight: 500;
   }
 `;
 
-const StyledLink = styled.a`
+const StyledLink = styled(Typography).attrs({
+  compontent: "a",
+  color: "primary",
+})`
   text-decoration: none;
-  color: #0e4ecc;
   font-weight: 500;
-`;
-
-const StyledSvgIcon = styled(SvgIcon)`
-  && {
-    transform: scale(1);
-    height: 5rem;
-    width: auto;
-    max-width: 100%;
-    padding: 12px;
-    filter: grayscale(1);
-    transition: filter ${transition}, transform ${transition};
-
-    /* There is no hovering on mobile, so let's never use grayscale filter */
-    ${contentSizeQuery("small-only")`
-      {
-        filter: unset;
-      }`}
-  }
-`;
-
-const ResponsiveGridItem = styled(Grid).attrs({
-  item: true,
-})`
-  ${contentSizeQuery("small")`
-    {
-      max-width: 50%;
-      flex-basis: 50%;
-    }`}
-
-  ${contentSizeQuery("medium")`
-    {
-      max-width: 33.3%;
-      flex-basis: 33.3%;
-    }`}
-
-  ${contentSizeQuery("large")`
-    {
-      max-width: 16.6%;
-      flex-basis: 16.6%;
-    }`}
-`;
-
-const ButtonWithIcon = styled(Button).attrs({
-  variant: "contained",
-  fullWidth: true,
-})`
-  && {
-    align-items: start;
-    height: 100%;
-    text-align: center;
-    background: white;
-    transition: background-color ${transition}, box-shadow ${transition},
-      border ${transition};
-
-    &:hover,
-    &:focus {
-      ${StyledSvgIcon} {
-        filter: unset;
-        transform: scale(1.2);
-      }
-    }
-
-    > .MuiButton-label {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-  }
 `;
 
 const Index = ({ countries }) => (
   <AppLayout>
-    {/* <ParticlesSection /> */}
     <Container style={{ position: "relative" }}>
       <Hero
         paddingY={16}
@@ -139,7 +118,7 @@ const Index = ({ countries }) => (
         style={{ minHeight: "calc(100vh - 300px)" }}
       >
         <Grid container>
-          <Grid item lg={7}>
+          <Grid item lg={7} md={8} xs={12}>
             <Box
               display="flex"
               flexDirection="column"
@@ -147,13 +126,13 @@ const Index = ({ countries }) => (
               alignItems="flex-start"
               height="100%"
             >
-              <Box style={{ background: "#fafafa91" }}>
+              <Box>
                 <Title color="primary">COVID-19 Data Portal</Title>
                 <Subtitle color="secondary">
-                  <span>for the Lancet COVID-19 Commission</span>
+                  for the Lancet COVID-19 Commission
                 </Subtitle>
               </Box>
-              <Box marginTop={3} style={{ background: "#fafafa91" }}>
+              <Box marginTop={3}>
                 <Typography variant="h3" component="p">
                   3.4 million data points · 216 countries · 246 days · 122
                   indicators
@@ -178,17 +157,12 @@ const Index = ({ countries }) => (
               </Box>
             </Box>
           </Grid>
-          <Grid item lg={5}>
-            <WorldSvg style={{ maxWidth: "100%", height: "auto" }} />
+          <Grid item lg={5} md={4} xs={0}>
+            <Hidden implementation="css" smDown>
+              <AnimatedWorldSvg style={{ maxWidth: "100%", height: "auto" }} />
+            </Hidden>
           </Grid>
         </Grid>
-        <Box style={{ position: "absolute", top: 0 }}>
-          <Grid container>
-            <Grid item xs={6}>
-              &nbsp;
-            </Grid>
-          </Grid>
-        </Box>
       </Hero>
       <Box>
         <Typography variant="h2" style={{ fontWeight: 500 }} gutterBottom>
