@@ -111,7 +111,7 @@ const NavBar = ({ fluid }) => {
             </Hidden>
             <Button component="a" href="https://covid19commission.org/">
               <Typography variant="body1" style={{ fontWeight: 700 }}>
-                Lancet Covid-19 Commission
+                Lancet COVID-19 Commission
               </Typography>
             </Button>
             {/* <Link href="/" passHref>

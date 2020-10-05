@@ -26,7 +26,7 @@ const NavBarDrawer = ({ pages, ...otherProps }) => (
         }}
       >
         <Typography variant="body1" style={{ color: "white", fontWeight: 700 }}>
-          Lancet Covid-19 Commission
+          Lancet COVID-19 Commission
         </Typography>
       </ListItem>
       {pages.map(({ href, label }) => (
