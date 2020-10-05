@@ -34,6 +34,8 @@ function MyApp({ Component, pageProps }) {
     };
   }, []);
 
+  const theme = getTheme();
+
   return (
     <>
       <Head>
@@ -43,9 +45,9 @@ function MyApp({ Component, pageProps }) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-      <NextNProgress />
+      <NextNProgress color={theme.palette.primary.main} />
       <StoreProvider>
-        <ThemeProvider theme={getTheme()}>
+        <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <Component {...pageProps} />
