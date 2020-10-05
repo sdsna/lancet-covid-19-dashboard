@@ -1,8 +1,8 @@
 const INDICATORS = [
   {
-    slug: "transmission-classification",
+    slug: "overall-transmission",
     id: "sdsn_transmission_classification",
-    name: "COVID-19 Transmission Classification",
+    name: "COVID-19 Overall Transmission",
     scale: {
       type: "ordinal",
       categories: [
