@@ -5,19 +5,13 @@ import { useMapStore } from "helpers/mapStore";
 
 const Tooltip = styled(Popper)`
   font-size: 0.8rem;
-  border-radius: 50px;
+  border-radius: 4px;
   padding: 4px;
   background: rgba(0, 0, 0, 0.8);
   color: #fff;
   position: absolute;
   pointer-events: none;
   z-index: 1000;
-
-  img {
-    height: 50px;
-    width: 50px;
-    display: block;
-  }
 
   .arrow:after {
     box-sizing: border-box;
@@ -34,7 +28,7 @@ const Tooltip = styled(Popper)`
   }
 `;
 
-const MapTooltip = observer(({ getImage, getLabel, getText, observations }) => {
+const MapTooltip = observer(({ getLabel, getText, observations }) => {
   const mapStore = useMapStore();
 
   if (!mapStore.tooltip) return null;
@@ -60,25 +54,11 @@ const MapTooltip = observer(({ getImage, getLabel, getText, observations }) => {
         },
       }}
     >
-      <Box display="flex" alignItems="stretch">
-        <Box display="flex" flexDirection="column" justifyContent="center">
-          <img src={getImage(countryId)} />
-        </Box>
-        <Box
-          paddingY={0.5}
-          paddingLeft={1}
-          paddingRight={2}
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-        >
-          <Typography variant="body1" style={{ fontWeight: 500 }}>
-            {getLabel(countryId)}
-          </Typography>
-          <Typography variant="body2">
-            {getText({ countryId, date })}
-          </Typography>
-        </Box>
+      <Box paddingX={1} paddingY={0.5}>
+        <Typography variant="body1" style={{ fontWeight: 700 }}>
+          {getLabel(countryId)}
+        </Typography>
+        <Typography variant="body2">{getText({ countryId, date })}</Typography>
       </Box>
     </Tooltip>
   );

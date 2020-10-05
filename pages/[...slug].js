@@ -13,7 +13,6 @@ import MapPane from "components/MapPane";
 import MapTooltip from "components/MapTooltip";
 import INDICATORS from "helpers/indicators";
 import getIndicatorProps from "helpers/getIndicatorProps";
-import getCountryFlagPath from "helpers/getCountryFlagPath";
 import getColorScale from "helpers/getColorScale";
 
 const Map = ({
@@ -109,7 +108,6 @@ const Map = ({
         <MapDrawer
           indicator={indicator}
           indicators={indicators}
-          getCountryFlagPath={getCountryFlagPath}
           getCountryName={getCountryName}
           getCountryValue={getCountryValue}
           getCountryDate={getCountryDate}
@@ -130,7 +128,6 @@ const Map = ({
         extractedAt={indicator.extractedAt}
       />
       <MapTooltip
-        getImage={getCountryFlagPath}
         getLabel={getCountryName}
         getText={getApproximateCountryValue}
       />

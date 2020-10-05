@@ -17,23 +17,18 @@ import { useMapStore } from "helpers/mapStore";
 
 const TypographyWithEmphasis = styled(Typography)`
   && {
-    font-weight: 500;
+    font-weight: 700;
   }
 `;
 
 const CountryInfo = observer(
-  ({ id, name, flagPath, getValue, getDate, scale, timeseries, onClose }) => {
+  ({ id, name, getValue, getDate, scale, timeseries, onClose }) => {
     const mapStore = useMapStore();
 
     return (
       <>
         <DrawerSection gray>
           <Box display="flex" alignItems="center">
-            <img
-              alt={`Flag of ${name}`}
-              style={{ height: 24, paddingRight: 8 }}
-              src={flagPath}
-            />
             <TypographyWithEmphasis variant="body1" style={{ flexGrow: 1 }}>
               {name}
             </TypographyWithEmphasis>
@@ -45,9 +40,6 @@ const CountryInfo = observer(
               <Close />
             </IconButton>
           </Box>
-        </DrawerSection>
-        <Divider />
-        <DrawerSection gray>
           <Observer>
             {() => (
               <DrawerHeadingWithCaption
@@ -61,7 +53,6 @@ const CountryInfo = observer(
             )}
           </Observer>
         </DrawerSection>
-        <Divider />
         <IndicatorTimeseries
           chartData={timeseries}
           countryName={name}
@@ -86,7 +77,6 @@ const MapDrawer = observer(
     indicator,
     indicators,
     getCountryName,
-    getCountryFlagPath,
     getCountryValue,
     getCountryDate,
     getTimeseries,
@@ -106,7 +96,6 @@ const MapDrawer = observer(
           <CountryInfo
             id={countryId}
             name={getCountryName(countryId)}
-            flagPath={getCountryFlagPath(countryId)}
             getValue={getCountryValue}
             getDate={getCountryDate}
             timeseries={getTimeseries(countryId)}
