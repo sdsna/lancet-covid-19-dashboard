@@ -159,7 +159,7 @@ export async function getStaticPaths() {
   });
 
   // Add one path without indicator ID
-  paths.push({ params: { slug: [] } });
+  // paths.push({ params: { slug: [] } });
 
   return {
     paths,
