@@ -5,11 +5,14 @@ import {
   Container,
   Grid,
   Hidden,
+  Tooltip,
   Typography,
 } from "@material-ui/core";
 import styled, { keyframes } from "styled-components";
 import AppLayout from "layouts/AppLayout";
+import TimeAgoExtraction from "components/TimeAgoExtraction";
 import contentSizeQuery from "helpers/contentSizeQuery";
+import getExtractionTimestamp from "helpers/getExtractionTimestamp";
 import WorldSvg from "static/undraw_connected_world_wuay.svg";
 
 const transition = "250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms";
@@ -98,7 +101,7 @@ const Subtitle = styled(Typography).attrs({
   }
 `;
 
-const Index = ({ countries }) => (
+const Index = ({ extractionTimestamp }) => (
   <AppLayout>
     <Container style={{ position: "relative" }}>
       <Hero
@@ -143,9 +146,14 @@ const Index = ({ countries }) => (
                 </Box>
               </Box>
               <Box marginY={1}>
-                <Typography variant="body2" style={{ color: "gray" }}>
-                  Last updated: 16 hours ago
-                </Typography>
+                <Tooltip
+                  title={`Database was updated on ${extractionTimestamp}`}
+                >
+                  <Typography variant="body2" style={{ color: "gray" }}>
+                    Last updated:{" "}
+                    <TimeAgoExtraction timestamp={extractionTimestamp} />
+                  </Typography>
+                </Tooltip>
               </Box>
             </Box>
           </Grid>
@@ -200,5 +208,15 @@ const Index = ({ countries }) => (
     </Container>
   </AppLayout>
 );
+
+export const getStaticProps = () => {
+  const extractionTimestamp = getExtractionTimestamp();
+
+  return {
+    props: {
+      extractionTimestamp,
+    },
+  };
+};
 
 export default Index;

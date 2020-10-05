@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Box, Tooltip, Typography } from "@material-ui/core";
 import { Update } from "mdi-material-ui";
 import { formatDistanceToNowStrict, parse } from "date-fns";
+import TimeAgoExtraction from "components/TimeAgoExtraction";
 
 const MapLastUpdated = ({ updatedAt }) => {
   const [text, setText] = useState(updatedAt);
@@ -27,7 +28,9 @@ const MapLastUpdated = ({ updatedAt }) => {
       <Tooltip title={`Data was extracted on ${updatedAt}`}>
         <Box display="flex" padding={0.5}>
           <Update fontSize="small" style={{ marginRight: 4 }} />
-          <Typography variant="body1">Updated: {text}</Typography>
+          <Typography variant="body1">
+            Updated: <TimeAgoExtraction timestamp={updatedAt} />
+          </Typography>
         </Box>
       </Tooltip>
     </Box>
