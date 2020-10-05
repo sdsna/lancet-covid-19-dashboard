@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>Lancet Covid-19 Dashboard</title>
+        <title>Lancet COVID-19 Dashboard</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
