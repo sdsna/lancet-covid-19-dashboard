@@ -2,6 +2,7 @@ import { observer, useLocalStore } from "mobx-react-lite";
 import ResizeObserver from "react-resize-observer";
 import { Box } from "@material-ui/core";
 import NavBar from "components/NavBar";
+import DownloadDatabaseDialog from "components/DownloadDatabaseDialog";
 import Footer from "components/Footer";
 import AppDrawer from "components/AppDrawer";
 
@@ -41,6 +42,7 @@ const AppLayout = observer(
           <AppDrawer {...drawerProps} isEmbedded={isEmbedded}>
             {Drawer}
           </AppDrawer>
+          <DownloadDatabaseDialog />
           <Box
             id="content"
             display="flex"

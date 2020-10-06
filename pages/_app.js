@@ -3,8 +3,10 @@ import Head from "next/head";
 import Router from "next/router";
 import { useEffect } from "react";
 import { useStaticRendering } from "mobx-react-lite";
-import { CssBaseline, ThemeProvider } from "@material-ui/core";
+import { CssBaseline } from "@material-ui/core";
+import { MuiThemeProvider } from "@material-ui/core/styles";
 import NextNProgress from "nextjs-progressbar";
+import { ThemeProvider } from "styled-components";
 import { StoreProvider } from "helpers/uiStore";
 import getTheme from "helpers/getTheme";
 import * as gtag from "helpers/gtag";
@@ -47,11 +49,13 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <NextNProgress color={theme.palette.primary.main} />
       <StoreProvider>
-        <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <Component {...pageProps} />
-        </ThemeProvider>
+        <MuiThemeProvider theme={theme}>
+          <ThemeProvider theme={theme}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </MuiThemeProvider>
       </StoreProvider>
     </>
   );

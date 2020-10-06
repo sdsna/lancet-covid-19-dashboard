@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { observer } from "mobx-react-lite";
 import Link from "next/link";
 import {
   AppBar,
   Box,
+  Button,
   ButtonBase,
   Container,
+  Divider,
   Hidden,
   IconButton,
   Toolbar,
@@ -13,12 +16,13 @@ import {
 import { Menu } from "mdi-material-ui";
 import styled from "styled-components";
 import NavBarDrawer from "components/NavBarDrawer";
+import { useStore } from "helpers/uiStore";
 import getTheme from "helpers/getTheme";
 import INDICATORS from "helpers/indicators";
 
 const { breakpoints } = getTheme();
 
-const Button = styled(ButtonBase).attrs({
+const StyledButtonBase = styled(ButtonBase).attrs({
   component: "a",
 })`
   && {
@@ -30,20 +34,23 @@ const Button = styled(ButtonBase).attrs({
   }
 `;
 
-const HoverButton = styled(Button)`
-  && {
-    opacity: 0.7;
-    transition: opacity 0.3s;
-  }
+const HoverButton = styled(StyledButtonBase)`
+  transition: background 0.3s ease-in-out;
 
   &&:hover {
-    opacity: 1;
+    background: ${(props) => props.theme.palette.primary.main};
   }
+`;
+
+const VerticalDivider = styled(Box)`
+  border-left: 1px solid rgba(6, 177, 216, 0.37);
+  height: 75%;
+  align-self: center;
 `;
 
 const Logo = styled.img``;
 
-const LogoButton = styled(Button)`
+const LogoButton = styled(StyledButtonBase)`
   ${breakpoints.down("sm")} {
     flex-grow: 1;
   }
@@ -54,10 +61,11 @@ const StyledToolbar = styled(Toolbar)`
     min-height: 64px;
     height: 64px
     max-height: 64px;
+    border-bottom: 3px solid ${(props) => props.theme.palette.primary.main};
 
     ${Logo} {
       height: 64px;
-      padding: 8px 0;
+    $  padding: 8px 0;
     }
 
     ${breakpoints.up("sm")} {
@@ -87,7 +95,9 @@ const pages = INDICATORS.map((indicator) => ({
   href: `/${indicator.slug}`,
 }));
 
-const NavBar = ({ fluid }) => {
+const NavBar = observer(({ fluid }) => {
+  const uiStore = useStore();
+
   let containerProps = { maxWidth: "lg", style: { padding: "0 8px" } };
 
   if (fluid) containerProps = { maxWidth: false };
@@ -98,8 +108,16 @@ const NavBar = ({ fluid }) => {
   return (
     <>
       <AppBar position="fixed" color="secondary">
-        <Container {...containerProps} disableGutters={true}>
-          <StyledToolbar disableGutters={true}>
+        <StyledToolbar disableGutters={true}>
+          <Container
+            {...containerProps}
+            disableGutters={true}
+            style={{
+              alignSelf: "stretch",
+              alignItems: "center",
+              display: "flex",
+            }}
+          >
             <Hidden implementation="css" mdUp>
               <Box display="flex">
                 <IconButton
@@ -149,13 +167,25 @@ const NavBar = ({ fluid }) => {
                   </HoverButton>
                 </Link>
               ))}
+              <VerticalDivider />
+              <HoverButton
+                component="a"
+                target="_blank"
+                href="https://covid19commission.org"
+              >
+                <Typography variant="body1">Lancet Commission</Typography>
+              </HoverButton>
+              <VerticalDivider />
+              <HoverButton onClick={uiStore.openDownloadDatabaseDialog}>
+                <Typography variant="body1">Download Database</Typography>
+              </HoverButton>
             </DesktopOnlyBox>
-          </StyledToolbar>
-        </Container>
+          </Container>
+        </StyledToolbar>
       </AppBar>
       <StyledToolbar />
     </>
   );
-};
+});
 
 export default NavBar;
