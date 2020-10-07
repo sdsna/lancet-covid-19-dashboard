@@ -1,6 +1,6 @@
 # Downloaded data
 /data/codebook.csv
-/data/last-extraction.json
+/data/badges/
 /data/indicators/
 
 # Ignore output directory

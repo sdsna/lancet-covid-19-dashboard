@@ -1,15 +1,8 @@
-import path from "path";
-import { readJsonSync } from "fs-extra";
+import getBadgeMessage from "helpers/getBadgeMessage";
 
 // Get the timestamp of latest extraction
 const getExtractionTimestamp = () => {
-  const extractionTimestampPath = path.join(
-    process.cwd(),
-    "data",
-    "last-extraction.json"
-  );
-  const extractionMetadata = readJsonSync(extractionTimestampPath);
-  return extractionMetadata["message"];
+  return getBadgeMessage("last-extraction");
 };
 
 export default getExtractionTimestamp;
