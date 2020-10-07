@@ -1,7 +1,7 @@
 const INDICATORS = [
   {
     slug: "overall-transmission",
-    id: "sdsn_transmission_classification",
+    id: "sdsn_overall_transmission",
     name: "COVID-19 Overall Transmission",
     hasMap: true,
     scale: {
