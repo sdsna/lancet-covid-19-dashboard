@@ -56,7 +56,7 @@ const Footer = () => {
               Our World in Data, Oxford, YouGov, and Google.
             </FooterTypography>
             <FooterTypography gutterBottom>
-              Our database and data portal are open source. The code is
+              Our database and data portal are open source. The source code is
               available on GitHub:{" "}
               <FooterLink
                 href="https://github.com/sdsna/lancet-covid-19-database/"
