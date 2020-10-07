@@ -2,14 +2,14 @@ import Link from "next/link";
 import { MenuList, MenuItem } from "@material-ui/core";
 import DropdownMenu from "components/DropdownMenu";
 
-const NavBarDropdownMenu = ({ pages, handeClose, ...otherProps }) => {
+const NavBarDropdownMenu = ({ pages, handleClose, ...otherProps }) => {
   if (pages == null || pages.length === 0) return null;
 
   return (
     <DropdownMenu
       placement="bottom-start"
       paperProps={{ elevation: 5, square: true }}
-      handeClose={handeClose}
+      handleClose={handleClose}
       {...otherProps}
     >
       <MenuList>
