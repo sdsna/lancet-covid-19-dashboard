@@ -36,9 +36,9 @@ const INDICATORS = [
     },
   },
   {
-    slug: "daily-cases-per-million",
+    slug: "new-cases-per-million",
     id: "owid_new_cases_per_million",
-    name: "Daily Cases Per Million",
+    name: "New Cases Per Million",
     scale: {
       type: "threshold",
       domain: [5, 10, 50, 100],
@@ -46,9 +46,9 @@ const INDICATORS = [
     },
   },
   {
-    slug: "daily-deaths-per-million",
+    slug: "new-deaths-per-million",
     id: "owid_new_deaths_per_million",
-    name: "Daily Deaths Per Million",
+    name: "New Deaths Per Million",
     scale: {
       type: "threshold",
       domain: [0.2, 0.5, 1, 2],
