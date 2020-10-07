@@ -62,7 +62,7 @@ const pages = [
     href: "/overall-transmission",
   },
   {
-    label: "Interactive Map",
+    label: "Interactive Maps",
     href: "/map",
     subpages: [
       ...INDICATORS.map((indicator) => ({
