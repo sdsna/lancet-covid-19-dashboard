@@ -16,7 +16,7 @@ const INDICATORS = [
         {
           value: 1,
           color: LIGHT_BLUE,
-          label: "Suppression (1)",
+          label: "Suppressed (1)",
         },
         {
           value: 2,
