@@ -1,4 +1,5 @@
 const LIGHT_BLUE = "#97caeb";
+const MEDIUM_BLUE = "#97bae2";
 const DARK_BLUE = "#4e8dd6";
 const ORANGE = "#f5ad72";
 const LIGHT_RED = "#df6b6c";
@@ -71,8 +72,8 @@ const INDICATORS = [
     hasMap: true,
     scale: {
       type: "threshold",
-      domain: [0.8, 1, 1.2, 1.5],
-      range: [LIGHT_BLUE, DARK_BLUE, ORANGE, LIGHT_RED, DARK_RED],
+      domain: [1, 1.2, 1.5],
+      range: [MEDIUM_BLUE, ORANGE, LIGHT_RED, DARK_RED],
     },
   },
   {
