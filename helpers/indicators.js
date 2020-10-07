@@ -70,6 +70,11 @@ const INDICATORS = [
     id: "marioli_effective_reproduction_rate",
     name: "Effective Reproduction Rate",
     hasMap: true,
+    target: {
+      value: 1,
+      color: ORANGE,
+      label: "Target: ERR <= 1",
+    },
     scale: {
       type: "threshold",
       domain: [1, 1.2, 1.5],

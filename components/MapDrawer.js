@@ -23,7 +23,7 @@ const TypographyWithEmphasis = styled(Typography)`
 `;
 
 const CountryInfo = observer(
-  ({ id, name, getValue, getDate, scale, timeseries, onClose }) => {
+  ({ id, name, getValue, getDate, scale, target, timeseries, onClose }) => {
     const mapStore = useMapStore();
     const theme = useTheme();
 
@@ -61,6 +61,7 @@ const CountryInfo = observer(
           countryId={id}
           activeStep={mapStore.currentStep}
           scale={scale}
+          target={target}
           primaryColor={theme.palette.secondary.main}
           secondaryColor={theme.palette.primary.main}
           // Do not include latest in timeseries chart
@@ -104,6 +105,7 @@ const MapDrawer = observer(
             getDate={getCountryDate}
             timeseries={getTimeseries(countryId)}
             scale={indicator.scale}
+            target={indicator.target}
             onClose={() => uiStore.clearTarget()}
           />
         ) : (

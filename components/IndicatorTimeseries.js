@@ -15,6 +15,15 @@ import { Box, Typography } from "@material-ui/core";
 import styled from "styled-components";
 import DrawerSection from "components/DrawerSection";
 
+const LegendLine = styled.span`
+  margin-top: -1px;
+  display: inline-block;
+  width: 10px;
+  vertical-align: middle;
+  margin-right: 5px;
+  border-bottom: 2px dotted ${(props) => props.styled.color};
+`;
+
 const CustomLegend = styled(Typography).attrs({
   variant: "caption",
   display: "block",
@@ -64,6 +73,7 @@ const IndicatorTimeseries = ({
   secondaryColor,
   stepFormatter,
   scale,
+  target,
   ...otherProps
 }) => (
   <DrawerSection {...otherProps}>
@@ -87,6 +97,15 @@ const IndicatorTimeseries = ({
           tick={{ fontSize: ".7rem", width: 60 }}
         />
         <ReferenceLine x={activeStep} stroke={secondaryColor} />
+        {target ? (
+          <ReferenceLine
+            ifOverflow="extendDomain"
+            y={target.value}
+            stroke={target.color}
+            strokeWidth={2}
+            strokeDasharray="3 3"
+          />
+        ) : null}
         <Tooltip
           separator={": "}
           labelFormatter={stepFormatter}
@@ -102,6 +121,11 @@ const IndicatorTimeseries = ({
         />
       </LineChart>
     </ResponsiveContainer>
+    {target ? (
+      <CustomLegend>
+        <LegendLine styled={{ color: target.color }} /> {target.label}
+      </CustomLegend>
+    ) : null}
   </DrawerSection>
 );
 
