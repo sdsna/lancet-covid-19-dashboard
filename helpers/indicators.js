@@ -1,3 +1,9 @@
+const LIGHT_BLUE = "#97caeb";
+const DARK_BLUE = "#4e8dd6";
+const ORANGE = "#f5ad72";
+const LIGHT_RED = "#df6b6c";
+const DARK_RED = "#ce2127";
+
 const INDICATORS = [
   {
     slug: "overall-transmission",
@@ -9,27 +15,27 @@ const INDICATORS = [
       categories: [
         {
           value: 1,
-          color: "#7cb9e0",
+          color: LIGHT_BLUE,
           label: "Suppression (1)",
         },
         {
           value: 2,
-          color: "#97bae2",
+          color: DARK_BLUE,
           label: "Low (2)",
         },
         {
           value: 3,
-          color: "#f5ad72",
+          color: ORANGE,
           label: "Medium (3)",
         },
         {
           value: 4,
-          color: "#df6b6c",
+          color: LIGHT_RED,
           label: "High (4)",
         },
         {
           value: 5,
-          color: "#ce2127",
+          color: DARK_RED,
           label: "Very High (5)",
         },
       ],
@@ -44,7 +50,7 @@ const INDICATORS = [
     scale: {
       type: "threshold",
       domain: [5, 10, 50, 100],
-      range: ["#7cb9e0", "#97bae2", "#f5ad72", "#df6b6c", "#ce2127"],
+      range: [LIGHT_BLUE, DARK_BLUE, ORANGE, LIGHT_RED, DARK_RED],
     },
   },
   {
@@ -55,7 +61,7 @@ const INDICATORS = [
     scale: {
       type: "threshold",
       domain: [0.2, 0.5, 1, 2],
-      range: ["#7cb9e0", "#97bae2", "#f5ad72", "#df6b6c", "#ce2127"],
+      range: [LIGHT_BLUE, DARK_BLUE, ORANGE, LIGHT_RED, DARK_RED],
     },
   },
   {
@@ -66,7 +72,7 @@ const INDICATORS = [
     scale: {
       type: "threshold",
       domain: [0.8, 1, 1.2, 1.5],
-      range: ["#7cb9e0", "#97bae2", "#f5ad72", "#df6b6c", "#ce2127"],
+      range: [LIGHT_BLUE, DARK_BLUE, ORANGE, LIGHT_RED, DARK_RED],
     },
   },
   {
@@ -77,7 +83,7 @@ const INDICATORS = [
     scale: {
       type: "threshold",
       domain: [0.01, 0.02, 0.05, 0.1],
-      range: ["#7cb9e0", "#97bae2", "#f5ad72", "#df6b6c", "#ce2127"],
+      range: [LIGHT_BLUE, DARK_BLUE, ORANGE, LIGHT_RED, DARK_RED],
     },
   },
   {
@@ -88,7 +94,7 @@ const INDICATORS = [
     scale: {
       type: "threshold",
       domain: [100, 50, 20, 10],
-      range: ["#7cb9e0", "#97bae2", "#f5ad72", "#df6b6c", "#ce2127"],
+      range: [LIGHT_BLUE, DARK_BLUE, ORANGE, LIGHT_RED, DARK_RED],
     },
   },
 ];
