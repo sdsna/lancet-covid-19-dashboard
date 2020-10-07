@@ -14,6 +14,7 @@ import AppLayout from "layouts/AppLayout";
 import TimeAgoExtraction from "components/TimeAgoExtraction";
 import { useStore } from "helpers/uiStore";
 import contentSizeQuery from "helpers/contentSizeQuery";
+import getIndicatorMapHref from "helpers/getIndicatorMapHref";
 import getExtractionTimestamp from "helpers/getExtractionTimestamp";
 import WorldSvg from "static/undraw_connected_world_wuay.svg";
 
@@ -208,7 +209,12 @@ const Index = observer(({ extractionTimestamp }) => {
           </Typography>
           <Box marginY={3}>
             <iframe
-              src="/overall-transmission/embed"
+              src={getIndicatorMapHref(
+                {
+                  slug: "overall-transmission",
+                },
+                { embed: true }
+              )}
               style={{
                 width: "100%",
                 height: 500,

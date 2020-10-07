@@ -16,44 +16,18 @@ import {
 import { Menu } from "mdi-material-ui";
 import styled from "styled-components";
 import NavBarDrawer from "components/NavBarDrawer";
+import NavBarButton from "components/NavBarButton";
+import getIndicatorMapHref from "helpers/getIndicatorMapHref";
 import { useStore } from "helpers/uiStore";
 import getTheme from "helpers/getTheme";
 import INDICATORS from "helpers/indicators";
 
 const { breakpoints } = getTheme();
 
-const StyledButtonBase = styled(ButtonBase).attrs({
-  component: "a",
-})`
-  && {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-self: stretch;
-    padding: 0 16px;
-  }
-`;
-
-const HoverButton = styled(StyledButtonBase)`
-  transition: background 0.3s ease-in-out;
-
-  &&:hover {
-    background: ${(props) => props.theme.palette.primary.main};
-  }
-`;
-
 const VerticalDivider = styled(Box)`
   border-left: 1px solid rgba(6, 177, 216, 0.37);
   height: 75%;
   align-self: center;
-`;
-
-const Logo = styled.img``;
-
-const LogoButton = styled(StyledButtonBase)`
-  ${breakpoints.down("sm")} {
-    flex-grow: 1;
-  }
 `;
 
 const StyledToolbar = styled(Toolbar)`
@@ -63,25 +37,17 @@ const StyledToolbar = styled(Toolbar)`
     max-height: 64px;
     border-bottom: 3px solid ${(props) => props.theme.palette.primary.main};
 
-    ${Logo} {
-      height: 64px;
-    $  padding: 8px 0;
-    }
-
     ${breakpoints.up("sm")} {
       min-height: 88px;
       height: 88px;
       max-height: 88px;
-
-      ${Logo} {
-        height: 88px;
-        padding: 12px 0;
-      }
     }
   }
 `;
 
-const DesktopOnlyBox = styled(Box)`
+const DesktopOnlyBox = styled(Box).attrs({
+  flexGrow: 1,
+})`
   height: 100%;
   display: flex;
 
@@ -90,10 +56,27 @@ const DesktopOnlyBox = styled(Box)`
   }
 `;
 
-const pages = INDICATORS.map((indicator) => ({
-  label: indicator.name,
-  href: `/${indicator.slug}`,
-}));
+const pages = [
+  {
+    label: "Indicators",
+    href: "/overall-transmission",
+  },
+  {
+    label: "Interactive Map",
+    href: "/map",
+    subpages: [
+      ...INDICATORS.map((indicator) => ({
+        label: indicator.name,
+        href: getIndicatorMapHref(indicator),
+      })),
+      {
+        label: "More coming soon...",
+        href: "coming-soon",
+        disabled: true,
+      },
+    ],
+  },
+];
 
 const NavBar = observer(({ fluid }) => {
   const uiStore = useStore();
@@ -104,6 +87,8 @@ const NavBar = observer(({ fluid }) => {
 
   const [showNavDrawer, setShowNavDrawer] = useState(false);
   const toggleNavDrawer = () => setShowNavDrawer(!showNavDrawer);
+
+  const TITLE = "COVID-19 Data Portal";
 
   return (
     <>
@@ -127,58 +112,34 @@ const NavBar = observer(({ fluid }) => {
                 >
                   <Menu />
                 </IconButton>
-                <Link href="/" passHref>
-                  <HoverButton>
-                    <Typography variant="body1" style={{ fontWeight: 700 }}>
-                      COVID-19 Data Platform
-                    </Typography>
-                  </HoverButton>
-                </Link>
               </Box>
             </Hidden>
-            <Hidden implementation="css" mdUp>
-              <IconButton
-                style={{ visibility: "hidden" }}
-                color="inherit"
-                aria-label="menu"
-              >
-                <Menu />
-              </IconButton>
-            </Hidden>
+            <NavBarButton href="/" label={TITLE} />
             <Hidden implementation="js" mdUp>
               <NavBarDrawer
                 open={showNavDrawer}
                 onClose={toggleNavDrawer}
+                title={TITLE}
                 pages={pages}
+                openDownloadDatabaseDialog={uiStore.openDownloadDatabaseDialog}
               />
             </Hidden>
             <DesktopOnlyBox>
-              <Link href="/" passHref>
-                <HoverButton>
-                  <Typography variant="body1" style={{ fontWeight: 700 }}>
-                    Home
-                  </Typography>
-                </HoverButton>
-              </Link>
-              {pages.map(({ label, href }) => (
-                <Link key={href} href={href} passHref>
-                  <HoverButton>
-                    <Typography variant="body1">{label}</Typography>
-                  </HoverButton>
-                </Link>
+              {pages.map(({ label, href, subpages }) => (
+                <NavBarButton label={label} href={href} subpages={subpages} />
               ))}
+              <Box flexGrow={1} />
               <VerticalDivider />
-              <HoverButton
-                component="a"
-                target="_blank"
+              <NavBarButton
+                label="Lancet Commission"
                 href="https://covid19commission.org"
-              >
-                <Typography variant="body1">Lancet Commission</Typography>
-              </HoverButton>
+                external={true}
+              />
               <VerticalDivider />
-              <HoverButton onClick={uiStore.openDownloadDatabaseDialog}>
-                <Typography variant="body1">Download Database</Typography>
-              </HoverButton>
+              <NavBarButton
+                label="Download Database"
+                onClick={uiStore.openDownloadDatabaseDialog}
+              />
             </DesktopOnlyBox>
           </Container>
         </StyledToolbar>

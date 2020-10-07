@@ -12,6 +12,7 @@ import MapDrawer from "components/MapDrawer";
 import MapPane from "components/MapPane";
 import MapTooltip from "components/MapTooltip";
 import INDICATORS from "helpers/indicators";
+import getIndicatorMapHref from "helpers/getIndicatorMapHref";
 import getIndicatorProps from "helpers/getIndicatorProps";
 import getColorScale from "helpers/getColorScale";
 
@@ -92,12 +93,7 @@ const Map = ({
   );
 
   const getLink = (indicator) => {
-    let path = `/${indicator.slug}`;
-
-    // If in embed mode, add embed
-    if (isEmbedded) path += "/embed";
-
-    return path;
+    return getIndicatorMapHref(indicator, { embed: isEmbedded });
   };
 
   const colorScale = getColorScale(indicator.scale);
@@ -156,7 +152,7 @@ export async function getStaticPaths() {
   });
 
   // Add one path without indicator ID
-  // paths.push({ params: { slug: [] } });
+  paths.push({ params: { slug: [] } });
 
   return {
     paths,
