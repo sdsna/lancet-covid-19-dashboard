@@ -126,7 +126,12 @@ const NavBar = observer(({ fluid }) => {
             </Hidden>
             <DesktopOnlyBox>
               {pages.map(({ label, href, subpages }) => (
-                <NavBarButton label={label} href={href} subpages={subpages} />
+                <NavBarButton
+                  key={href}
+                  label={label}
+                  href={href}
+                  subpages={subpages}
+                />
               ))}
               <Box flexGrow={1} />
               <VerticalDivider />
