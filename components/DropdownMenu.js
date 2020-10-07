@@ -6,6 +6,7 @@ const DropdownMenu = ({
   handleClose,
   children,
   paperProps,
+  placement = "top-start",
 }) => {
   return (
     <Popper
@@ -14,18 +15,19 @@ const DropdownMenu = ({
       role={undefined}
       transition
       disablePortal
-      placement="bottom-start"
+      placement={placement}
       style={{ minWidth: anchorRef.current?.offsetWidth }}
     >
       {({ TransitionProps, placement }) => (
         <Grow
           {...TransitionProps}
           style={{
-            transformOrigin:
-              placement === "bottom" ? "center top" : "center bottom",
+            transformOrigin: placement.startsWith("bottom")
+              ? "center top"
+              : "center bottom",
           }}
         >
-          <Paper square {...paperProps}>
+          <Paper {...paperProps}>
             <ClickAwayListener onClickAway={handleClose}>
               {children}
             </ClickAwayListener>

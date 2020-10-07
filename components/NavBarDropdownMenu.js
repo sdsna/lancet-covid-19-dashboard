@@ -6,7 +6,11 @@ const NavBarDropdownMenu = ({ pages, ...otherProps }) => {
   if (pages == null || pages.length === 0) return null;
 
   return (
-    <DropdownMenu paperProps={{ elevation: 5 }} {...otherProps}>
+    <DropdownMenu
+      placement="bottom-start"
+      paperProps={{ elevation: 5, square: true }}
+      {...otherProps}
+    >
       <MenuList>
         {pages.map(({ href, label, disabled }) => (
           <Link key={href} href={href} passHref>

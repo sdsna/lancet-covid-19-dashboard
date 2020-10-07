@@ -6,17 +6,20 @@ import {
   Container,
   Grid,
   Hidden,
+  MenuItem,
   Tooltip,
   Typography,
 } from "@material-ui/core";
 import styled, { keyframes } from "styled-components";
 import AppLayout from "layouts/AppLayout";
+import ButtonWithDropdownMenu from "components/ButtonWithDropdownMenu";
 import TimeAgoExtraction from "components/TimeAgoExtraction";
 import { useStore } from "helpers/uiStore";
 import contentSizeQuery from "helpers/contentSizeQuery";
 import getIndicatorMapHref from "helpers/getIndicatorMapHref";
 import getExtractionTimestamp from "helpers/getExtractionTimestamp";
 import WorldSvg from "static/undraw_connected_world_wuay.svg";
+import INDICATORS from "helpers/indicators";
 
 const transition = "250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms";
 
@@ -151,9 +154,37 @@ const Index = observer(({ extractionTimestamp }) => {
                     </Button>
                   </Box>
                   <Box marginY={1}>
-                    <Button size="large" color="secondary" variant="outlined">
-                      Explore Maps
-                    </Button>
+                    <ButtonWithDropdownMenu
+                      button={({ ref, openMenu }) => (
+                        <Button
+                          ref={ref}
+                          size="large"
+                          color="secondary"
+                          variant="outlined"
+                          onClick={openMenu}
+                        >
+                          Explore Maps
+                        </Button>
+                      )}
+                    >
+                      <MenuItem
+                        button={false}
+                        style={{ fontWeight: 700, paddingBottom: 8 }}
+                        divider
+                      >
+                        Select an indicator
+                      </MenuItem>
+                      {INDICATORS.map((indicator) => (
+                        <Link
+                          key={getIndicatorMapHref(indicator)}
+                          href={getIndicatorMapHref(indicator)}
+                          passHref
+                        >
+                          <MenuItem component="a">{indicator.name}</MenuItem>
+                        </Link>
+                      ))}
+                      <MenuItem disabled>More maps coming soon...</MenuItem>
+                    </ButtonWithDropdownMenu>
                   </Box>
                 </Box>
                 <Box marginY={1}>
