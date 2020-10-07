@@ -1,13 +1,7 @@
-# Sustainable Development Report 2020: Data Visualization
+# COVID-19 Data Portal of the Lancet COVID-19 Commission
 
-## Bundle Analysis
+https://data.covid19commission.org/
 
-Run `npm run analyze` to analyze the server and client bundles.
+## About
 
-Webpack has been configured **not** to bundle `/public/data/` in the client.
-See `next.config.js`.
-
-References:
-- https://arunoda.me/blog/ssr-and-server-only-modules
-- https://github.com/vercel/next.js/tree/canary/examples/analyze-bundles
-- https://nextjs.org/docs/api-reference/next.config.js/custom-webpack-config
+This is the data portal of the [Lancet Commission on COVID-19](https://covid19commission.org/). The data portal is updated daily from Monday to Friday. It provides access to the latest data available on COVID-19, such as new cases, deaths, positive test rate, and other valuable data to gauge the transmission and response to the pandemic. Data is pooled from different sources, including Johns Hopkins University, Our World in Data, Oxford, YouGov, and Google.
