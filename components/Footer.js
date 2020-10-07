@@ -21,17 +21,6 @@ const ResponsiveGridItem = styled(Grid).attrs({
 })`
   flex-basis: ${(props) => props.styled.width * 100}%;
   max-width: ${(props) => props.styled.width * 100}%;
-
-  ${contentSizeQuery("medium-down")`
-    {
-      max-width: 100%;
-      flex-basis: 100%;
-
-      text-align: center;
-      &:not(:first-of-type) {
-        margin-top: 16px;
-      }
-    }`}
 `;
 
 const Logo = styled.img`
@@ -66,7 +55,24 @@ const Footer = () => {
               pooled from different sources, including Johns Hopkins University,
               Our World in Data, Oxford, YouGov, and Google.
             </FooterTypography>
-            <FooterTypography>
+            <FooterTypography gutterBottom>
+              Our database and data portal are open source. The code is
+              available on GitHub:{" "}
+              <FooterLink
+                href="https://github.com/sdsna/lancet-covid-19-database/"
+                target="_blank"
+              >
+                Database
+              </FooterLink>{" "}
+              ·{" "}
+              <FooterLink
+                href="https://github.com/sdsna/lancet-covid-19-dashboard"
+                target="_blank"
+              >
+                Data Portal
+              </FooterLink>
+            </FooterTypography>
+            <FooterTypography gutterBottom>
               For questions, comments, and suggestions, please contact{" "}
               <FooterLink href="mailto:finn.woelm@unsdsn.org" target="_blank">
                 finn.woelm@unsdsn.org
