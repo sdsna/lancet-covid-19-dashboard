@@ -1,10 +1,24 @@
+import { Divider } from "@material-ui/core";
 import DrawerSection from "components/DrawerSection";
 import DrawerHeading from "components/DrawerHeading";
 import DrawerHeadingWithCaption from "components/DrawerHeadingWithCaption";
 import DrawerText from "components/DrawerText";
+import DrawerActionSection from "components/DrawerActionSection";
 
-const IndicatorMetadata = ({ indicator, drawerSectionProps = false }) => (
+const IndicatorMetadata = ({
+  indicator,
+  showActions = true,
+  actionProps = {},
+  showDatabaseId = false,
+  drawerSectionProps = false,
+}) => (
   <>
+    {showActions ? (
+      <>
+        <DrawerActionSection indicator={indicator} {...actionProps} />
+        <Divider />
+      </>
+    ) : null}
     <DrawerSection {...drawerSectionProps}>
       <DrawerHeading>Description</DrawerHeading>
       <DrawerText>{indicator.description}</DrawerText>
@@ -13,6 +27,12 @@ const IndicatorMetadata = ({ indicator, drawerSectionProps = false }) => (
       <DrawerHeading>Source</DrawerHeading>
       <DrawerText>{indicator.source}</DrawerText>
     </DrawerSection>
+    {showDatabaseId ? (
+      <DrawerSection {...drawerSectionProps}>
+        <DrawerHeading>Database ID</DrawerHeading>
+        <DrawerText>{indicator.id}</DrawerText>
+      </DrawerSection>
+    ) : null}
     <DrawerSection {...drawerSectionProps}>
       <DrawerHeading>Reference</DrawerHeading>
       <DrawerText>{indicator.reference}</DrawerText>
@@ -23,7 +43,7 @@ const IndicatorMetadata = ({ indicator, drawerSectionProps = false }) => (
     </DrawerSection>
     <DrawerSection {...drawerSectionProps}>
       <DrawerHeading>Notes</DrawerHeading>
-      <DrawerText>{indicator.notes}</DrawerText>
+      <DrawerText>{indicator.notes || "None"}</DrawerText>
     </DrawerSection>
     <DrawerSection {...drawerSectionProps}>
       <DrawerHeading>Links</DrawerHeading>

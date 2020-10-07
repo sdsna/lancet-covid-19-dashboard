@@ -7,12 +7,16 @@ export const StoreProvider = ({ children }) => {
   const store = useLocalStore(() => ({
     target: null,
     showDrawer: false,
+    isEmbedded: false,
     showDownloadDatabaseDialog: false,
     openDownloadDatabaseDialog() {
       store.showDownloadDatabaseDialog = true;
     },
     closeDownloadDatabaseDialog() {
       store.showDownloadDatabaseDialog = false;
+    },
+    setIsEmbedded(value) {
+      store.isEmbedded = value;
     },
     openDrawer(target) {
       store.showDrawer = true;

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { observer } from "mobx-react-lite";
 import {
   compareAsc,
   differenceInCalendarDays,
@@ -15,121 +16,123 @@ import INDICATORS from "helpers/indicators";
 import getIndicatorMapHref from "helpers/getIndicatorMapHref";
 import getIndicatorProps from "helpers/getIndicatorProps";
 import getColorScale from "helpers/getColorScale";
+import { useStore } from "helpers/uiStore";
 
-const Map = ({
-  indicator,
-  countries,
-  observations,
-  bounds,
-  indicators,
-  isEmbedded,
-}) => {
-  const getCountryName = useCallback((countryId) => countries[countryId], [
-    countries,
-  ]);
+const Map = observer(
+  ({ indicator, countries, observations, bounds, indicators, isEmbedded }) => {
+    const getCountryName = useCallback((countryId) => countries[countryId], [
+      countries,
+    ]);
 
-  const getCountryDate = useCallback(
-    ({ countryId, date }) => {
-      if (date === "latest")
-        return `${observations[countryId]["latestDate"]} (latest value)`;
+    const getCountryDate = useCallback(
+      ({ countryId, date }) => {
+        if (date === "latest")
+          return `${observations[countryId]["latestDate"]} (latest value)`;
 
-      return date;
-    },
-    [observations]
-  );
+        return date;
+      },
+      [observations]
+    );
 
-  const getCountryValue = useCallback(
-    ({ countryId, date }) => {
-      const value = observations[countryId][date];
+    const getCountryValue = useCallback(
+      ({ countryId, date }) => {
+        const value = observations[countryId][date];
 
-      if (value != null) {
-        const { scale } = indicator;
+        if (value != null) {
+          const { scale } = indicator;
 
-        if (scale.type === "threshold") return Number(value).toLocaleString();
-        if (scale.type === "ordinal")
-          return scale.categories.find((c) => c.value === value).label;
-      }
+          if (scale.type === "threshold") return Number(value).toLocaleString();
+          if (scale.type === "ordinal")
+            return scale.categories.find((c) => c.value === value).label;
+        }
 
-      return "No value";
-    },
-    [observations]
-  );
+        return "No value";
+      },
+      [observations]
+    );
 
-  const getTimeseries = useCallback(
-    (countryId) => {
-      const countryData = observations[countryId];
-      return Object.keys(countryData)
-        .map((key) => {
-          if (key === "latestDate" || key === "latest") return;
+    const getTimeseries = useCallback(
+      (countryId) => {
+        const countryData = observations[countryId];
+        return Object.keys(countryData)
+          .map((key) => {
+            if (key === "latestDate" || key === "latest") return;
 
-          return {
-            step: differenceInCalendarDays(
-              parseISO(key),
-              parseISO(bounds.startDate)
-            ),
-            [countryId]: countryData[key],
-          };
-        })
-        .filter(Boolean);
-    },
-    [observations, bounds.startDate]
-  );
+            return {
+              step: differenceInCalendarDays(
+                parseISO(key),
+                parseISO(bounds.startDate)
+              ),
+              [countryId]: countryData[key],
+            };
+          })
+          .filter(Boolean);
+      },
+      [observations, bounds.startDate]
+    );
 
-  const getApproximateCountryValue = useCallback(
-    ({ countryId, date }) => {
-      const value = observations[countryId][date];
+    const getApproximateCountryValue = useCallback(
+      ({ countryId, date }) => {
+        const value = observations[countryId][date];
 
-      if (value != null) {
-        const { scale } = indicator;
+        if (value != null) {
+          const { scale } = indicator;
 
-        if (scale.type === "threshold") return millify(value);
-        if (scale.type === "ordinal")
-          return scale.categories.find((c) => c.value === value).label;
-      }
+          if (scale.type === "threshold") return millify(value);
+          if (scale.type === "ordinal")
+            return scale.categories.find((c) => c.value === value).label;
+        }
 
-      return "No value";
-    },
-    [observations]
-  );
+        return "No value";
+      },
+      [observations]
+    );
 
-  const getLink = (indicator) => {
-    return getIndicatorMapHref(indicator, { embed: isEmbedded });
-  };
+    const getLink = (indicator) => {
+      return getIndicatorMapHref(indicator, { embed: isEmbedded });
+    };
 
-  const colorScale = getColorScale(indicator.scale);
+    const uiStore = useStore();
 
-  return (
-    <MapLayout
-      Drawer={
-        <MapDrawer
-          indicator={indicator}
-          indicators={indicators}
-          getCountryName={getCountryName}
-          getCountryValue={getCountryValue}
-          getCountryDate={getCountryDate}
-          getTimeseries={getTimeseries}
-          getLink={getLink}
-        />
-      }
-      isEmbedded={isEmbedded}
-      mobileMenuLabel={indicator.name}
-      startDate={bounds.startDate}
-      endDate={bounds.endDate}
-    >
-      <MapPane
-        data={observations}
-        colorScale={colorScale}
+    useEffect(() => {
+      uiStore.setIsEmbedded(isEmbedded);
+    }, [isEmbedded]);
+
+    const colorScale = getColorScale(indicator.scale);
+
+    return (
+      <MapLayout
+        Drawer={
+          <MapDrawer
+            indicator={indicator}
+            indicators={indicators}
+            getCountryName={getCountryName}
+            getCountryValue={getCountryValue}
+            getCountryDate={getCountryDate}
+            getTimeseries={getTimeseries}
+            getLink={getLink}
+          />
+        }
+        isEmbedded={isEmbedded}
+        mobileMenuLabel={indicator.name}
         startDate={bounds.startDate}
         endDate={bounds.endDate}
-        extractedAt={indicator.extractedAt}
-      />
-      <MapTooltip
-        getLabel={getCountryName}
-        getText={getApproximateCountryValue}
-      />
-    </MapLayout>
-  );
-};
+      >
+        <MapPane
+          data={observations}
+          colorScale={colorScale}
+          startDate={bounds.startDate}
+          endDate={bounds.endDate}
+          extractedAt={indicator.extractedAt}
+        />
+        <MapTooltip
+          getLabel={getCountryName}
+          getText={getApproximateCountryValue}
+        />
+      </MapLayout>
+    );
+  }
+);
 
 export async function getStaticPaths() {
   // Create one route for each indicator

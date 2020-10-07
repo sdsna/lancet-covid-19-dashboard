@@ -3,6 +3,7 @@ const INDICATORS = [
     slug: "overall-transmission",
     id: "sdsn_transmission_classification",
     name: "COVID-19 Overall Transmission",
+    hasMap: true,
     scale: {
       type: "ordinal",
       categories: [
@@ -39,6 +40,7 @@ const INDICATORS = [
     slug: "new-cases-per-million",
     id: "owid_new_cases_per_million",
     name: "New Cases Per Million",
+    hasMap: true,
     scale: {
       type: "threshold",
       domain: [5, 10, 50, 100],
@@ -49,6 +51,7 @@ const INDICATORS = [
     slug: "new-deaths-per-million",
     id: "owid_new_deaths_per_million",
     name: "New Deaths Per Million",
+    hasMap: true,
     scale: {
       type: "threshold",
       domain: [0.2, 0.5, 1, 2],
@@ -59,6 +62,7 @@ const INDICATORS = [
     slug: "effective-reproduction-rate",
     id: "marioli_effective_reproduction_rate",
     name: "Effective Reproduction Rate",
+    hasMap: true,
     scale: {
       type: "threshold",
       domain: [0.8, 1, 1.2, 1.5],
@@ -69,6 +73,7 @@ const INDICATORS = [
     slug: "positive-test-rate",
     id: "owid_positive_rate",
     name: "Positive Test Rate",
+    hasMap: true,
     scale: {
       type: "threshold",
       domain: [0.01, 0.02, 0.05, 0.1],
@@ -79,6 +84,7 @@ const INDICATORS = [
     slug: "tests-per-case",
     id: "owid_tests_per_case",
     name: "Tests Per Case",
+    hasMap: true,
     scale: {
       type: "threshold",
       domain: [100, 50, 20, 10],

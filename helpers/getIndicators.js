@@ -1,17 +1,29 @@
-// const path = require("path");
-// const csvtojson = require("csvtojson");
-// const INDICATORS = require("./indicators");
-//
-// const getIndicators = async () => {
-//   const codebookPath = path.join(process.cwd(), "data", "codebook.csv");
-//   const codebook = await csvtojson().fromFile(codebookPath);
-//
-//   return codebook.map((entry) => {
-//     const indicator = INDICATORS.find({ id } => id === entry.indicator)
-//
-//     id: entry.indicator,
-//     source: entry.source,
-//   });
-// };
-//
-// module.exports = getIndicators;
+const path = require("path");
+const csvtojson = require("csvtojson");
+import INDICATORS from "helpers/indicators";
+
+const getIndicators = async () => {
+  const codebookPath = path.join(process.cwd(), "data", "codebook.csv");
+  let indicators = await csvtojson().fromFile(codebookPath);
+
+  // Set ID
+  indicators.map((indicator) => {
+    indicator.id = indicator.indicator;
+    delete indicator.indicator;
+  });
+
+  // Default hasMap to false
+  indicators.map((indicator) => (indicator.hasMap = false));
+
+  // Combine info from codebook and our internal definitions
+  indicators.forEach((indicator) => {
+    Object.assign(
+      indicator,
+      INDICATORS.find(({ id }) => id === indicator.id) || {}
+    );
+  });
+
+  return indicators;
+};
+
+module.exports = getIndicators;

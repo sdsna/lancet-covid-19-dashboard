@@ -59,7 +59,7 @@ const DesktopOnlyBox = styled(Box).attrs({
 const pages = [
   {
     label: "Indicators",
-    href: "/overall-transmission",
+    href: "/indicators",
   },
   {
     label: "Interactive Maps",

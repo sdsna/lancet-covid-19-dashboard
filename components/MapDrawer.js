@@ -111,6 +111,12 @@ const MapDrawer = observer(
         )}
         <Divider />
         <IndicatorMetadata
+          showActions={countryId == null}
+          actionProps={{
+            download: true,
+            mapEmbed: !uiStore.isEmbedded,
+            mapInNewTab: uiStore.isEmbedded,
+          }}
           indicator={indicator}
           drawerSectionProps={{
             gray: countryId != null,
