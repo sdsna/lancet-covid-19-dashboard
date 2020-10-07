@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "patch-package",
-    "download": "node ./data/download",
+    "download": "node ./data/download --unhandled-rejections=strict",
     "dev": "next dev",
     "build": "next build",
     "export": "next export",
