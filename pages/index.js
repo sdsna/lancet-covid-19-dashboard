@@ -169,8 +169,13 @@ const Index = observer(({ extractionTimestamp }) => {
                     >
                       <MenuItem
                         button={false}
-                        style={{ fontWeight: 700, paddingBottom: 8 }}
+                        style={{
+                          fontWeight: 700,
+                          paddingBottom: 8,
+                          outline: "none",
+                        }}
                         divider
+                        tabIndex="-1"
                       >
                         Select an indicator
                       </MenuItem>
