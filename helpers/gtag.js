@@ -1,6 +1,6 @@
 // Source: https://github.com/zeit/next.js/tree/canary/examples/with-google-analytics
 
-export const GA_TRACKING_ID = "null";
+export const GA_TRACKING_ID = "UA-180209999-1";
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
 export const pageview = (url) => {

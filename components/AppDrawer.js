@@ -95,7 +95,7 @@ const AppDrawer = observer(({ children, permanent = false, isEmbedded }) => {
         gtag.event({
           action: "view",
           category: "sideMenu",
-          label: `Target: ${target.id}`,
+          label: `Target: ${target}`,
         });
       }
     );

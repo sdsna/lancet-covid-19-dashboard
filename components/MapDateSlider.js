@@ -1,4 +1,5 @@
 import { useCallback, useEffect } from "react";
+import { reaction } from "mobx";
 import { observer, useLocalStore } from "mobx-react-lite";
 import { useRouter } from "next/router";
 import { Box, ButtonBase, Divider, Slider, Tooltip } from "@material-ui/core";
@@ -6,6 +7,7 @@ import { Pause, Play } from "mdi-material-ui";
 import Link from "next/link";
 import { format } from "date-fns";
 import { useMapStore } from "helpers/mapStore";
+import * as gtag from "helpers/gtag";
 
 function ValueLabelComponent(props) {
   const { children, open, value } = props;
@@ -38,6 +40,25 @@ const MapDateSlider = observer((props) => {
     if (!mapStore.showTimeSlider) return;
 
     mapStore.setActiveDateString(router.query.date || "latest");
+  }, [router]);
+
+  // Track play button in Google Analytics
+  useEffect(() => {
+    const disposeReaction = reaction(
+      () => mapStore.isPlaying,
+      (isPlaying) => {
+        if (!isPlaying) return;
+
+        gtag.event({
+          action: "play",
+          category: "timeseries",
+          label: `Map: ${router.asPath}`,
+        });
+      }
+    );
+    return () => {
+      disposeReaction();
+    };
   }, [router]);
 
   // Do not display slider if dates are not set (we probably have no
