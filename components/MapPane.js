@@ -25,6 +25,10 @@ const MapPane = ({ data, extractedAt, colorScale, startDate, endDate }) => (
       onMouseDown={startDrag}
       onMouseUp={endDrag}
       onMouseLeave={endDrag}
+      onContextMenu={(event) => {
+        event.preventDefault();
+        return false;
+      }}
     >
       <MapSvg data={data} colorScale={colorScale} />
     </Box>
