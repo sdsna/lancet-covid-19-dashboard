@@ -102,6 +102,7 @@ const Map = observer(
 
     return (
       <MapLayout
+        title={indicator.name}
         Drawer={
           <MapDrawer
             indicator={indicator}

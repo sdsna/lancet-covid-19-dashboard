@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { observer, useLocalStore } from "mobx-react-lite";
 import ResizeObserver from "react-resize-observer";
 import { Box } from "@material-ui/core";
@@ -16,6 +17,7 @@ const AppLayout = observer(
     onContentResize = null,
     footer = true,
     isEmbedded = false,
+    title = null,
   }) => {
     const store = useLocalStore(() => ({
       width: null,
@@ -37,6 +39,12 @@ const AppLayout = observer(
 
     return (
       <>
+        <Head>
+          <title>
+            {title ? `${title} - ` : ""}COVID-19 Data Portal of the Lancet
+            COVID-19 Commission
+          </title>
+        </Head>
         {isEmbedded ? null : <NavBar fluid={fluid} />}
         <Box display="flex" flexGrow={1} overflow={overflow}>
           <AppDrawer {...drawerProps} isEmbedded={isEmbedded}>

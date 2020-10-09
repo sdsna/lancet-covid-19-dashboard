@@ -43,9 +43,40 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <title>COVID-19 Data Portal of the Lancet COVID-19 Commission</title>
         <meta
+          name="description"
+          content="The COVID-19 Data Portal of the Lancet Commission on COVID-19 contains over 3 million data points and more than 100 indicator, updated daily."
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@UNSDSN" />
+        <meta
+          name="twitter:title"
+          content="COVID-19 Data Portal of the Lancet COVID-19 Commission"
+        />
+        <meta
+          name="twitter:description"
+          content="The COVID-19 Data Portal of the Lancet Commission on COVID-19 contains over 3 million data points and more than 100 indicator, updated daily."
+        />
+        <meta
+          name="twitter:image"
+          content="https://data.covid19commission.org/static/map-overall-transmission.png"
+        />
+        <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
+        <meta
+          property="og:title"
+          content="COVID-19 Data Portal of the Lancet COVID-19 Commission"
+        />
+        <meta
+          property="og:image"
+          content="https://data.covid19commission.org/static/map-overall-transmission.png"
+        />
+        <meta
+          property="og:description"
+          content="The COVID-19 Data Portal of the Lancet Commission on COVID-19 contains over 3 million data points and more than 100 indicator, updated daily."
+        />
+        <meta property="og:url" content="https://data.covid19commission.org/" />
       </Head>
       <NextNProgress color={theme.palette.primary.main} />
       <StoreProvider>

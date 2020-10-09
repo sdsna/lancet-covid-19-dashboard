@@ -42,7 +42,10 @@ const IndicatorsPage = ({ indicators }) => {
     indicators.find((indicator) => indicator.id === id);
 
   return (
-    <AppLayout Drawer={<IndicatorDrawer getIndicatorById={getIndicatorById} />}>
+    <AppLayout
+      title="Indicators"
+      Drawer={<IndicatorDrawer getIndicatorById={getIndicatorById} />}
+    >
       <Container>
         <Box marginY={4}>
           <Typography variant="h1" color="primary" gutterBottom>
