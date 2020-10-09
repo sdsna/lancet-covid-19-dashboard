@@ -44,7 +44,7 @@ function MyApp({ Component, pageProps }) {
         <title>COVID-19 Data Portal of the Lancet COVID-19 Commission</title>
         <meta
           name="description"
-          content="The COVID-19 Data Portal of the Lancet Commission on COVID-19 contains over 3 million data points and more than 100 indicator, updated daily."
+          content="The portal and database contain over 3 million data points and more than 100 indicators on COVID-19, updated daily."
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@UNSDSN" />
@@ -54,7 +54,7 @@ function MyApp({ Component, pageProps }) {
         />
         <meta
           name="twitter:description"
-          content="The COVID-19 Data Portal of the Lancet Commission on COVID-19 contains over 3 million data points and more than 100 indicator, updated daily."
+          content="The portal and database contain over 3 million data points and more than 100 indicators on COVID-19, updated daily."
         />
         <meta
           name="twitter:image"
@@ -74,7 +74,7 @@ function MyApp({ Component, pageProps }) {
         />
         <meta
           property="og:description"
-          content="The COVID-19 Data Portal of the Lancet Commission on COVID-19 contains over 3 million data points and more than 100 indicator, updated daily."
+          content="The portal and database contain over 3 million data points and more than 100 indicators on COVID-19, updated daily."
         />
         <meta property="og:url" content="https://data.covid19commission.org/" />
       </Head>
