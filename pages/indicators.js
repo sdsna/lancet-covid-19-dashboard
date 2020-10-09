@@ -49,7 +49,7 @@ const IndicatorsPage = ({ indicators }) => {
             COVID-19 Indicators
           </Typography>
           <Typography variant="body1" gutterBottom>
-            The COVID-19 database of the Lancet Commission for COVID-19 contains
+            The COVID-19 database of the Lancet Commission on COVID-19 contains
             over 3 million data points and more than 100 indicators. The data
             has been collected from a range of sources, including Johns Hopkins
             University, Our World in Data, Oxford, YouGov, and Google. The
