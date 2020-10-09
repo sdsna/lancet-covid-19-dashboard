@@ -256,10 +256,17 @@ const Index = observer(
               The map below shows an assessment of the overall transmission of
               COVID-19, showing which countries have suppressed the virus and
               where COVID-19 is spreading. The assessment is based on the
-              methodology described in Lancet COVID-19 Commission Statement on
-              the occasion of the 75th session of the UN General Assembly. It is
-              based on two key measures: new cases per million and tests per
-              case. The assessment is updated daily from Monday to Friday.
+              methodology described in the{" "}
+              <a
+                href="https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)31927-9/fulltext"
+                target="_blank"
+              >
+                Lancet COVID-19 Commission Statement on the occasion of the 75th
+                session of the UN General Assembly
+              </a>
+              . It is based on two key measures: new cases per million and the
+              positive test rate. The assessment is updated daily from Monday to
+              Friday.
             </Typography>
             <Box marginY={3}>
               <iframe
