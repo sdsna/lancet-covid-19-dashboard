@@ -69,7 +69,7 @@ const CountryInfo = observer(
           stepFormatter={(stepId) =>
             format(mapStore.stepIdToDateObject(stepId), "PP")
           }
-          onClick={(data, index) => mapStore.selectStep(data.activeLabel)}
+          onClick={(data, index) => mapStore.selectStep(data?.activeLabel)}
           gray
         />
       </>

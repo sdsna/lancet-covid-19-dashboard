@@ -11,6 +11,9 @@ const INDICATORS = [
     id: "sdsn_overall_transmission",
     name: "COVID-19 Overall Transmission",
     hasMap: true,
+    // There is no much data prior to March 1st, so we start the timeslider on
+    // March 1st
+    startDate: "2020-03-01",
     scale: {
       type: "ordinal",
       categories: [

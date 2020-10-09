@@ -193,10 +193,17 @@ export async function getStaticProps({ params }) {
     ),
   ];
   const dates = dateStrings.map((string) => parseISO(string)).sort(compareAsc);
-  let startDate = null,
-    endDate = null;
-  if (dates.length > 0) {
+
+  // If startDate or endDate is set in helpers/indicators.js, use that date...
+  let startDate = indicator.startDate;
+  let endDate = indicator.endDate;
+  // Otherwise, use the first and last date of data available
+  // TODO: Remove data that exceeds the time bounds, so we can serve smaller
+  //       data files.
+  if (dates.length > 0 && startDate == null) {
     startDate = format(dates[0], "yyyy-MM-dd");
+  }
+  if (dates.length > 0 && endDate == null) {
     endDate = format(dates[dates.length - 1], "yyyy-MM-dd");
   }
 

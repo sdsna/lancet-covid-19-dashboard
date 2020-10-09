@@ -73,6 +73,8 @@ export const MapStoreProvider = ({
         store.selectStep(store.currentStep + 1, options);
       },
       selectStep(stepId, options) {
+        if (stepId == null) return;
+
         if (stepId > store.stepCount) stepId = store.stepCount;
         if (stepId < 0) stepId = 0;
 

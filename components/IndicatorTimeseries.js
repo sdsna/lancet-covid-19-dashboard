@@ -82,6 +82,8 @@ const IndicatorTimeseries = ({
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           type="number"
+          // Cut off data that flows outside of the axis bounds
+          allowDataOverflow={true}
           allowDecimals={false}
           domain={[0, steps]}
           dataKey="step"
