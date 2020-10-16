@@ -4,6 +4,7 @@ import DrawerHeading from "components/DrawerHeading";
 import DrawerHeadingWithCaption from "components/DrawerHeadingWithCaption";
 import DrawerText from "components/DrawerText";
 import DrawerActionSection from "components/DrawerActionSection";
+import ExternalLinkify from "components/ExternalLinkify";
 
 const IndicatorMetadata = ({
   indicator,
@@ -35,7 +36,9 @@ const IndicatorMetadata = ({
     ) : null}
     <DrawerSection {...drawerSectionProps}>
       <DrawerHeading>Reference</DrawerHeading>
-      <DrawerText>{indicator.reference}</DrawerText>
+      <DrawerText>
+        <ExternalLinkify>{indicator.reference}</ExternalLinkify>
+      </DrawerText>
     </DrawerSection>
     <DrawerSection {...drawerSectionProps}>
       <DrawerHeading>License</DrawerHeading>
@@ -43,19 +46,20 @@ const IndicatorMetadata = ({
     </DrawerSection>
     <DrawerSection {...drawerSectionProps}>
       <DrawerHeading>Notes</DrawerHeading>
-      <DrawerText>{indicator.notes || "None"}</DrawerText>
+      <DrawerText>
+        <ExternalLinkify>{indicator.notes || "None"}</ExternalLinkify>
+      </DrawerText>
     </DrawerSection>
     <DrawerSection {...drawerSectionProps}>
-      <DrawerHeading>Links</DrawerHeading>
+      <DrawerHeading>Data Repository</DrawerHeading>
       <DrawerText>
-        <a href={indicator.link_to_data_repository} target="_blank">
-          Data Repository
-        </a>
+        <ExternalLinkify>{indicator.link_to_data_repository}</ExternalLinkify>
       </DrawerText>
+    </DrawerSection>
+    <DrawerSection {...drawerSectionProps}>
+      <DrawerHeading>Raw Dataset</DrawerHeading>
       <DrawerText>
-        <a href={indicator.link_to_dataset} target="_blank">
-          Dataset
-        </a>
+        <ExternalLinkify>{indicator.link_to_dataset}</ExternalLinkify>
       </DrawerText>
     </DrawerSection>
   </>

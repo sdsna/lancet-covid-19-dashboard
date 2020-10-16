@@ -30,6 +30,7 @@
     "nextjs-progressbar": "0.0.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-linkify": "^1.0.0-alpha",
     "react-resize-observer": "^1.1.1",
     "react-svgmt": "^1.1.11",
     "recharts": "^1.8.5",
