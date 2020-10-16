@@ -29,8 +29,7 @@ const NormalizedSvg = styled(SvgLoader)`
   .geojson {
     stroke: #fff;
     fill: none;
-    stroke-width: 1;
-    stroke-dasharray: 1;
+    pointer-events: none;
   }
 `;
 
