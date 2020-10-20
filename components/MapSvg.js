@@ -150,7 +150,8 @@ const MapSvgSection = observer(({ data, colorScale }) => {
                 selector={`#${countryId}`}
                 clickable="clickable"
                 fill={
-                  colorScale(data[countryId][mapStore.activeDate]) || "#e1e1e1"
+                  colorScale(data[countryId][mapStore.activeDate]?.[0]) ||
+                  "#e1e1e1"
                 }
                 onClick={() => uiStore.openDrawer(countryId)}
                 onMouseMove={(event) =>

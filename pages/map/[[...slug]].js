@@ -7,7 +7,6 @@ import {
   parseISO,
 } from "date-fns";
 import styled from "styled-components";
-import millify from "millify";
 import MapLayout from "layouts/MapLayout";
 import MapDrawer from "components/MapDrawer";
 import MapPane from "components/MapPane";
@@ -16,10 +15,18 @@ import { mapIndicators } from "helpers/indicators";
 import getIndicatorMapHref from "helpers/getIndicatorMapHref";
 import getIndicatorProps from "helpers/getIndicatorProps";
 import getColorScale from "helpers/getColorScale";
+import formatIndicatorValue from "helpers/formatIndicatorValue";
 import { useStore } from "helpers/uiStore";
 
 const Map = observer(
-  ({ indicator, countries, observations, bounds, isEmbedded }) => {
+  ({
+    indicator,
+    countries,
+    observations,
+    supplementalIndicators,
+    bounds,
+    isEmbedded,
+  }) => {
     const getCountryName = useCallback((countryId) => countries[countryId], [
       countries,
     ]);
@@ -36,17 +43,26 @@ const Map = observer(
 
     const getCountryValue = useCallback(
       ({ countryId, date }) => {
-        const value = observations[countryId][date];
+        const value = observations[countryId][date]?.[0];
 
-        if (value != null) {
-          const { scale } = indicator;
+        return formatIndicatorValue({ value, indicator });
+      },
+      [observations]
+    );
 
-          if (scale.type === "threshold") return Number(value).toLocaleString();
-          if (scale.type === "ordinal")
-            return scale.categories.find((c) => c.value === value).label;
-        }
+    const getObservationsForTooltip = useCallback(
+      ({ countryId, date }) => {
+        const values = observations[countryId][date] || [null];
+        const indicators = [indicator, ...supplementalIndicators];
 
-        return "No value";
+        return values.map((value, i) => ({
+          label: indicators[i].name,
+          value: formatIndicatorValue({
+            value,
+            indicator: indicators[i],
+            approximate: true,
+          }),
+        }));
       },
       [observations]
     );
@@ -63,29 +79,12 @@ const Map = observer(
                 parseISO(key),
                 parseISO(bounds.startDate)
               ),
-              [countryId]: countryData[key],
+              [countryId]: countryData[key][0],
             };
           })
           .filter(Boolean);
       },
       [observations, bounds.startDate]
-    );
-
-    const getApproximateCountryValue = useCallback(
-      ({ countryId, date }) => {
-        const value = observations[countryId][date];
-
-        if (value != null) {
-          const { scale } = indicator;
-
-          if (scale.type === "threshold") return millify(value);
-          if (scale.type === "ordinal")
-            return scale.categories.find((c) => c.value === value).label;
-        }
-
-        return "No value";
-      },
-      [observations]
     );
 
     const getLink = (indicator) => {
@@ -128,7 +127,8 @@ const Map = observer(
         />
         <MapTooltip
           getLabel={getCountryName}
-          getText={getApproximateCountryValue}
+          getCountryDate={getCountryDate}
+          getObservations={getObservationsForTooltip}
         />
       </MapLayout>
     );
@@ -174,9 +174,12 @@ export async function getStaticProps({ params }) {
   // Load data for the requested indicator (or the first indicator in the list)
   const indicatorSlug =
     (params.slug && params.slug[0]) || mapIndicators[0].slug;
-  const { indicator, countries, observations } = await getIndicatorProps(
-    indicatorSlug
-  );
+  const {
+    indicator,
+    countries,
+    observations,
+    supplementalIndicators,
+  } = await getIndicatorProps(indicatorSlug);
 
   // Evaluate start and end Date
   const dateStrings = [
@@ -223,6 +226,7 @@ export async function getStaticProps({ params }) {
       indicator,
       countries,
       observations,
+      supplementalIndicators,
       bounds: {
         max,
         min,

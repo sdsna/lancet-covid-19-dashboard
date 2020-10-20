@@ -45,6 +45,10 @@ const INDICATORS = [
       ],
       missingColor: "#e1e1e1",
     },
+    supplementalIndicators: [
+      "sdsn_new_cases_per_million_smoothed",
+      "owid_positive_rate",
+    ],
   },
   {
     slug: "new-cases-per-million",
@@ -104,6 +108,13 @@ const INDICATORS = [
       type: "threshold",
       domain: [100, 50, 20, 10],
       range: [LIGHT_BLUE, DARK_BLUE, ORANGE, LIGHT_RED, DARK_RED],
+    },
+  },
+  {
+    id: "sdsn_new_cases_per_million_smoothed",
+    name: "New Cases Per Million (14-day average)",
+    scale: {
+      type: "threshold",
     },
   },
 ];

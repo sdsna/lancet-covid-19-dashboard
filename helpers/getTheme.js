@@ -60,7 +60,7 @@ const theme = createMuiTheme({
       letterSpacing: 0,
       textTransform: "uppercase",
       lineHeight: 1,
-      marginBottom: 8,
+      marginBottom: 4,
     },
   },
   props: {

@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { Box, Popper, Typography } from "@material-ui/core";
+import { Box, Divider, Popper, Typography } from "@material-ui/core";
 import styled from "styled-components";
 import { useMapStore } from "helpers/mapStore";
 
@@ -28,7 +28,7 @@ const Tooltip = styled(Popper)`
   }
 `;
 
-const MapTooltip = observer(({ getLabel, getText, observations }) => {
+const MapTooltip = observer(({ getLabel, getObservations, getCountryDate }) => {
   const mapStore = useMapStore();
 
   if (!mapStore.tooltip) return null;
@@ -55,10 +55,30 @@ const MapTooltip = observer(({ getLabel, getText, observations }) => {
       }}
     >
       <Box paddingX={1} paddingY={0.5}>
-        <Typography variant="body1" style={{ fontWeight: 700 }}>
-          {getLabel(countryId)}
-        </Typography>
-        <Typography variant="body2">{getText({ countryId, date })}</Typography>
+        <Box marginBottom={2}>
+          <Typography variant="h3" component="p" style={{ fontWeight: 700 }}>
+            {getLabel(countryId)}
+          </Typography>
+          <Typography
+            variant="caption"
+            style={{ color: "rgba(255,255,255,.87)" }}
+          >
+            as of {getCountryDate({ countryId, date })}
+          </Typography>
+        </Box>
+        {getObservations({ countryId, date }).map(({ label, value }) => (
+          <Box key={label} marginTop={2}>
+            <Typography
+              variant="overline"
+              style={{ color: "rgba(255,255,255,.87)" }}
+            >
+              {label}
+            </Typography>
+            <Typography variant="body1" style={{ fontWeight: 500 }}>
+              {value}
+            </Typography>
+          </Box>
+        ))}
       </Box>
     </Tooltip>
   );
