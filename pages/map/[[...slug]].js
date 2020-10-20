@@ -19,7 +19,7 @@ import getColorScale from "helpers/getColorScale";
 import { useStore } from "helpers/uiStore";
 
 const Map = observer(
-  ({ indicator, countries, observations, bounds, indicators, isEmbedded }) => {
+  ({ indicator, countries, observations, bounds, isEmbedded }) => {
     const getCountryName = useCallback((countryId) => countries[countryId], [
       countries,
     ]);
@@ -106,7 +106,7 @@ const Map = observer(
         Drawer={
           <MapDrawer
             indicator={indicator}
-            indicators={indicators}
+            indicators={INDICATORS}
             getCountryName={getCountryName}
             getCountryValue={getCountryValue}
             getCountryDate={getCountryDate}
@@ -165,13 +165,6 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  // Fetch list of indicators, keeping only slug, id, and name
-  const indicators = INDICATORS.map(({ slug, id, name }) => ({
-    slug,
-    id,
-    name,
-  }));
-
   // Flag for toggling embed mode
   let isEmbedded = false;
   if (params.slug && params.slug[params.slug.length - 1] === "embed") {
@@ -179,7 +172,7 @@ export async function getStaticProps({ params }) {
   }
 
   // Load data for the requested indicator (or the first indicator in the list)
-  const indicatorSlug = (params.slug && params.slug[0]) || indicators[0].slug;
+  const indicatorSlug = (params.slug && params.slug[0]) || INDICATORS[0].slug;
   const { indicator, countries, observations } = await getIndicatorProps(
     indicatorSlug
   );
@@ -235,7 +228,6 @@ export async function getStaticProps({ params }) {
         startDate,
         endDate,
       },
-      indicators,
       isEmbedded,
     },
   };
