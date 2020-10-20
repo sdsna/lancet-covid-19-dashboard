@@ -1,6 +1,6 @@
 const path = require("path");
 const csvtojson = require("csvtojson");
-import INDICATORS from "helpers/indicators";
+import { indicators } from "helpers/indicators";
 
 const getIndicators = async () => {
   const codebookPath = path.join(process.cwd(), "data", "codebook.csv");
@@ -19,7 +19,7 @@ const getIndicators = async () => {
   indicators.forEach((indicator) => {
     Object.assign(
       indicator,
-      INDICATORS.find(({ id }) => id === indicator.id) || {}
+      indicators.find(({ id }) => id === indicator.id) || {}
     );
   });
 

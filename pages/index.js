@@ -20,7 +20,7 @@ import getIndicatorMapHref from "helpers/getIndicatorMapHref";
 import getExtractionTimestamp from "helpers/getExtractionTimestamp";
 import getBadgeMessage from "helpers/getBadgeMessage";
 import WorldSvg from "static/undraw_connected_world_wuay.svg";
-import INDICATORS from "helpers/indicators";
+import { mapIndicators } from "helpers/indicators";
 
 const transition = "250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms";
 
@@ -193,11 +193,11 @@ const Index = observer(
                             outline: "none",
                           }}
                           divider
-                          tabIndex="-1"
+                          tabIndex={-1}
                         >
                           Select an indicator
                         </MenuItem>
-                        {INDICATORS.map((indicator) => (
+                        {mapIndicators.map((indicator) => (
                           <Link
                             key={getIndicatorMapHref(indicator)}
                             href={getIndicatorMapHref(indicator)}

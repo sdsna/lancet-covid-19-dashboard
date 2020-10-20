@@ -1,12 +1,13 @@
 import path from "path";
 import csvtojson from "csvtojson";
 import { readJsonSync } from "fs-extra";
-import INDICATORS from "helpers/indicators";
+import { mapIndicators } from "helpers/indicators";
 import getExtractionTimestamp from "helpers/getExtractionTimestamp";
 
 const getIndicatorProps = async (indicatorSlug) => {
   // Map the slug to the indicator ID
-  const indicatorId = INDICATORS.find(({ slug }) => slug === indicatorSlug)?.id;
+  const indicatorId = mapIndicators.find(({ slug }) => slug === indicatorSlug)
+    ?.id;
 
   // Load the indicator metadata from codebook
   const codebookPath = path.join(process.cwd(), "data", "codebook.csv");
@@ -15,7 +16,7 @@ const getIndicatorProps = async (indicatorSlug) => {
   // Combine info from codebook and our internal definitions
   const indicator = Object.assign(
     codebook.find((entry) => entry.indicator === indicatorId),
-    INDICATORS.find(({ slug }) => slug === indicatorSlug)
+    mapIndicators.find(({ slug }) => slug === indicatorSlug)
   );
   delete indicator.indicator;
 

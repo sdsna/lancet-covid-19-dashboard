@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 const fse = require("fs-extra");
 const path = require("path");
-const INDICATORS = require("../helpers/indicators");
+const { indicators } = require("../helpers/indicators");
 
 const REPO_URL =
   "https://raw.githubusercontent.com/sdsna/lancet-covid-19-database";
@@ -20,7 +20,6 @@ const main = async () => {
     await downloadBadge(badge);
   });
   await downloadCodebook();
-  const indicators = INDICATORS;
   for (let i = 0; i < indicators.length; i++) {
     process.stdout.write(`Downloading ${indicators[i].id} ...`);
     await downloadIndicator(indicators[i].id);

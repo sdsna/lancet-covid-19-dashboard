@@ -108,4 +108,7 @@ const INDICATORS = [
   },
 ];
 
-module.exports = INDICATORS;
+module.exports = {
+  indicators: INDICATORS,
+  mapIndicators: INDICATORS.filter((indicator) => indicator.hasMap === true),
+};

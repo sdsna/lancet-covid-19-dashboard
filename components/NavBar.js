@@ -20,7 +20,7 @@ import NavBarButton from "components/NavBarButton";
 import getIndicatorMapHref from "helpers/getIndicatorMapHref";
 import { useStore } from "helpers/uiStore";
 import getTheme from "helpers/getTheme";
-import INDICATORS from "helpers/indicators";
+import { mapIndicators } from "helpers/indicators";
 
 const { breakpoints } = getTheme();
 
@@ -65,7 +65,7 @@ const pages = [
     label: "Interactive Maps",
     href: "/map",
     subpages: [
-      ...INDICATORS.map((indicator) => ({
+      ...mapIndicators.map((indicator) => ({
         label: indicator.name,
         href: getIndicatorMapHref(indicator),
       })),

@@ -12,7 +12,7 @@ import MapLayout from "layouts/MapLayout";
 import MapDrawer from "components/MapDrawer";
 import MapPane from "components/MapPane";
 import MapTooltip from "components/MapTooltip";
-import INDICATORS from "helpers/indicators";
+import { mapIndicators } from "helpers/indicators";
 import getIndicatorMapHref from "helpers/getIndicatorMapHref";
 import getIndicatorProps from "helpers/getIndicatorProps";
 import getColorScale from "helpers/getColorScale";
@@ -106,7 +106,7 @@ const Map = observer(
         Drawer={
           <MapDrawer
             indicator={indicator}
-            indicators={INDICATORS}
+            indicators={mapIndicators}
             getCountryName={getCountryName}
             getCountryValue={getCountryValue}
             getCountryDate={getCountryDate}
@@ -139,7 +139,7 @@ export async function getStaticPaths() {
   // Create one route for each indicator
   const paths = [];
 
-  INDICATORS.forEach((indicator) => {
+  mapIndicators.forEach((indicator) => {
     // Support plain version
     paths.push({
       params: {
@@ -172,7 +172,8 @@ export async function getStaticProps({ params }) {
   }
 
   // Load data for the requested indicator (or the first indicator in the list)
-  const indicatorSlug = (params.slug && params.slug[0]) || INDICATORS[0].slug;
+  const indicatorSlug =
+    (params.slug && params.slug[0]) || mapIndicators[0].slug;
   const { indicator, countries, observations } = await getIndicatorProps(
     indicatorSlug
   );
