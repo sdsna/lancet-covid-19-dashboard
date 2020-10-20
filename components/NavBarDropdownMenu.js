@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MenuList, MenuItem } from "@material-ui/core";
 import DropdownMenu from "components/DropdownMenu";
+import LinkHandler from "components/LinkHandler";
 
 const NavBarDropdownMenu = ({ pages, handleClose, ...otherProps }) => {
   if (pages == null || pages.length === 0) return null;
@@ -13,8 +14,8 @@ const NavBarDropdownMenu = ({ pages, handleClose, ...otherProps }) => {
       {...otherProps}
     >
       <MenuList>
-        {pages.map(({ href, label, disabled }) => (
-          <Link key={href} href={href} passHref>
+        {pages.map(({ key, href, label, disabled }) => (
+          <LinkHandler key={key || href} href={href}>
             <MenuItem
               disabled={disabled}
               component="a"
@@ -25,7 +26,7 @@ const NavBarDropdownMenu = ({ pages, handleClose, ...otherProps }) => {
             >
               {label}
             </MenuItem>
-          </Link>
+          </LinkHandler>
         ))}
       </MenuList>
     </DropdownMenu>

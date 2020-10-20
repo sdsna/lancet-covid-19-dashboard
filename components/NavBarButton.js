@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Box, ButtonBase, Typography } from "@material-ui/core";
 import styled from "styled-components";
 import NavBarDropdownMenu from "components/NavBarDropdownMenu";
+import LinkHandler from "components/LinkHandler";
 
 const StyledButtonBase = styled(ButtonBase).attrs({
   component: "a",
@@ -24,18 +25,6 @@ const HoverButton = styled(StyledButtonBase)`
     background: ${(props) => props.theme.palette.primary.main};
   }
 `;
-
-const LinkHandler = ({ href, external, children }) => {
-  // If this is an external button or a button without link, we do not need
-  // to use the NextJS Link component
-  if (!href || external) return <>{children}</>;
-
-  return (
-    <Link href={href} passHref>
-      {children}
-    </Link>
-  );
-};
 
 const NavBarButton = ({ label, href, subpages, external, onClick }) => {
   const buttonRef = useRef();

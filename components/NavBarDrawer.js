@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Link from "next/link";
 import {
   Box,
@@ -7,6 +8,7 @@ import {
   ListItemText,
   Typography,
 } from "@material-ui/core";
+import LinkHandler from "components/LinkHandler";
 import getTheme from "helpers/getTheme";
 
 const { palette } = getTheme();
@@ -43,16 +45,16 @@ const NavBarDrawer = ({
           <ListItemText primary="Home" />
         </ListItem>
       </Link>
-      {pages.map(({ href, label, subpages }) => (
-        <>
-          <Link key={href} href={href} passHref>
+      {pages.map(({ key, href, label, subpages }) => (
+        <Fragment key={key || href}>
+          <Link href={href} passHref>
             <ListItem button component="a" divider>
               <ListItemText primary={label} />
             </ListItem>
           </Link>
           <Box style={{ background: "rgba(0,0,0,.05)" }}>
-            {(subpages || []).map(({ href, label, disabled }) => (
-              <Link key={href} href={href} passHref>
+            {(subpages || []).map(({ key, href, label, disabled }) => (
+              <LinkHandler key={key || href} href={href}>
                 <ListItem
                   button
                   component="a"
@@ -65,10 +67,10 @@ const NavBarDrawer = ({
                     style={{ paddingLeft: 12 }}
                   />
                 </ListItem>
-              </Link>
+              </LinkHandler>
             ))}
           </Box>
-        </>
+        </Fragment>
       ))}
       <ListItem
         button

@@ -71,7 +71,7 @@ const pages = [
       })),
       {
         label: "More coming soon...",
-        href: "coming-soon",
+        key: "coming-soon",
         disabled: true,
       },
     ],
