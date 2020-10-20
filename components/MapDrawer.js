@@ -23,15 +23,33 @@ const TypographyWithEmphasis = styled(Typography)`
 `;
 
 const CountryInfo = observer(
-  ({ id, name, getValue, getDate, scale, target, timeseries, onClose }) => {
+  ({
+    id,
+    name,
+    getObservations,
+    getDate,
+    scale,
+    target,
+    timeseries,
+    onClose,
+  }) => {
     const mapStore = useMapStore();
     const theme = useTheme();
+
+    const [primaryObservation, ...supplementalObservations] = getObservations({
+      countryId: id,
+      date: mapStore.activeDate,
+    });
 
     return (
       <>
         <DrawerSection gray>
           <Box display="flex" alignItems="center">
-            <TypographyWithEmphasis variant="body1" style={{ flexGrow: 1 }}>
+            <TypographyWithEmphasis
+              variant="h3"
+              component="p"
+              style={{ fontWeight: 700, flexGrow: 1 }}
+            >
               {name}
             </TypographyWithEmphasis>
             <IconButton
@@ -44,16 +62,32 @@ const CountryInfo = observer(
           </Box>
           <Observer>
             {() => (
-              <DrawerHeadingWithCaption
-                caption={`as of ${getDate({
+              <Typography variant="caption" color="textSecondary">
+                as of{" "}
+                {getDate({
                   countryId: id,
                   date: mapStore.activeDate,
-                })}`}
-              >
-                {getValue({ countryId: id, date: mapStore.activeDate })}
-              </DrawerHeadingWithCaption>
+                })}
+              </Typography>
             )}
           </Observer>
+          <Box marginTop={2}>
+            <Observer>
+              {() => (
+                <>
+                  <Typography
+                    variant="overline"
+                    style={{ color: "rgba(0,0,0,.7)" }}
+                  >
+                    {primaryObservation.label}
+                  </Typography>
+                  <Typography variant="body1" style={{ fontWeight: 500 }}>
+                    {primaryObservation.value}
+                  </Typography>
+                </>
+              )}
+            </Observer>
+          </Box>
         </DrawerSection>
         <IndicatorTimeseries
           chartData={timeseries}
@@ -72,6 +106,23 @@ const CountryInfo = observer(
           onClick={(data, index) => mapStore.selectStep(data?.activeLabel)}
           gray
         />
+        {supplementalObservations.length ? (
+          <DrawerSection gray paddingTop={0} paddingBottom={0}>
+            {supplementalObservations.map((observation, i) => (
+              <Box key={observation.label} marginTop={i == 0 ? 0 : 2}>
+                <Typography
+                  variant="overline"
+                  style={{ color: "rgba(0,0,0,.7)" }}
+                >
+                  {observation.label}
+                </Typography>
+                <Typography variant="body1" style={{ fontWeight: 500 }}>
+                  {observation.value}
+                </Typography>
+              </Box>
+            ))}
+          </DrawerSection>
+        ) : null}
       </>
     );
   }
@@ -82,7 +133,7 @@ const MapDrawer = observer(
     indicator,
     indicators,
     getCountryName,
-    getCountryValue,
+    getCountryObservations,
     getCountryDate,
     getTimeseries,
     getLink,
@@ -101,7 +152,7 @@ const MapDrawer = observer(
           <CountryInfo
             id={countryId}
             name={getCountryName(countryId)}
-            getValue={getCountryValue}
+            getObservations={getCountryObservations}
             getDate={getCountryDate}
             timeseries={getTimeseries(countryId)}
             scale={indicator.scale}

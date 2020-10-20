@@ -41,16 +41,7 @@ const Map = observer(
       [observations]
     );
 
-    const getCountryValue = useCallback(
-      ({ countryId, date }) => {
-        const value = observations[countryId][date]?.[0];
-
-        return formatIndicatorValue({ value, indicator });
-      },
-      [observations]
-    );
-
-    const getObservationsForTooltip = useCallback(
+    const getCountryObservations = useCallback(
       ({ countryId, date }) => {
         const values = observations[countryId][date] || [null];
         const indicators = [indicator, ...supplementalIndicators];
@@ -107,7 +98,7 @@ const Map = observer(
             indicator={indicator}
             indicators={mapIndicators}
             getCountryName={getCountryName}
-            getCountryValue={getCountryValue}
+            getCountryObservations={getCountryObservations}
             getCountryDate={getCountryDate}
             getTimeseries={getTimeseries}
             getLink={getLink}
@@ -128,7 +119,7 @@ const Map = observer(
         <MapTooltip
           getLabel={getCountryName}
           getCountryDate={getCountryDate}
-          getObservations={getObservationsForTooltip}
+          getObservations={getCountryObservations}
         />
       </MapLayout>
     );
