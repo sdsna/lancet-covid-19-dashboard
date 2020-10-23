@@ -47,7 +47,7 @@ const INDICATORS = [
     },
     supplementalIndicators: [
       "sdsn_new_cases_per_million_smoothed",
-      "owid_positive_rate",
+      "sdsn_positive_test_rate_smoothed",
     ],
   },
   {
@@ -113,6 +113,13 @@ const INDICATORS = [
   {
     id: "sdsn_new_cases_per_million_smoothed",
     name: "New Cases Per Million (14-day average)",
+    scale: {
+      type: "threshold",
+    },
+  },
+  {
+    id: "sdsn_positive_test_rate_smoothed",
+    name: "Positive Test Rate (7-day average)",
     scale: {
       type: "threshold",
     },
