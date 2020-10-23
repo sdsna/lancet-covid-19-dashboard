@@ -84,6 +84,17 @@ const INDICATORS = [
     },
   },
   {
+    slug: "total-deaths",
+    id: "jhu_deaths",
+    name: "Total Deaths",
+    hasMap: true,
+    scale: {
+      type: "threshold",
+      domain: [50000, 10000, 1000, 100],
+      range: [DARK_RED, LIGHT_RED, ORANGE, DARK_BLUE, LIGHT_BLUE],
+    },
+  },
+  {
     slug: "effective-reproduction-rate",
     id: "marioli_effective_reproduction_rate",
     name: "Effective Reproduction Rate",
