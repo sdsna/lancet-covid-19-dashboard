@@ -20,10 +20,13 @@ const getLegendLabel = (domain, index) => {
       domain[index - 1]
     )}`;
 
+  // Set separator as "—", unless the numbers are negative, then we use "to"
+  const separator = domain.every((value) => value >= 0) ? "—" : "to";
+
   return [domain[index - 1], domain[index]]
     .sort((a, b) => a - b)
     .map((value) => numberFormat(value))
-    .join(" — ");
+    .join(` ${separator} `);
 };
 
 const MapLegendThreshold = ({ range, domain }) => (
