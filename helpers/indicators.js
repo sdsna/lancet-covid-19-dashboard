@@ -133,6 +133,17 @@ const INDICATORS = [
     },
   },
   {
+    slug: "government-response-stringency-index",
+    id: "ox_stringency_index_for_display",
+    name: "Government Response Stringency Index",
+    hasMap: true,
+    scale: {
+      type: "threshold",
+      domain: [20, 40, 60, 80],
+      range: [LIGHT_BLUE, DARK_BLUE, ORANGE, LIGHT_RED, DARK_RED],
+    },
+  },
+  {
     id: "sdsn_new_cases_per_million_smoothed",
     name: "New Cases Per Million (14-day average)",
     scale: {
