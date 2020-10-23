@@ -144,6 +144,17 @@ const INDICATORS = [
     },
   },
   {
+    slug: "mobility-trends-retail-and-recreation",
+    id: "google_mobility_change_retail_and_recreation",
+    name: "Mobility Trends for Retail and Recreation",
+    hasMap: true,
+    scale: {
+      type: "threshold",
+      domain: [5, 0, -15, -30],
+      range: [LIGHT_BLUE, DARK_BLUE, ORANGE, LIGHT_RED, DARK_RED],
+    },
+  },
+  {
     id: "sdsn_new_cases_per_million_smoothed",
     name: "New Cases Per Million (14-day average)",
     scale: {
