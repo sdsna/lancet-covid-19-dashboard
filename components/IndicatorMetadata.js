@@ -51,6 +51,14 @@ const IndicatorMetadata = ({
       </DrawerText>
     </DrawerSection>
     <DrawerSection {...drawerSectionProps}>
+      <DrawerHeading>Disclaimer</DrawerHeading>
+      <DrawerText>
+        Data and metadata are provided "as is", without any warranty or
+        guarantees. Comparability between countries may vary. For full notes and
+        disclaimers, see the source data repository.
+      </DrawerText>
+    </DrawerSection>
+    <DrawerSection {...drawerSectionProps}>
       <DrawerHeading>Data Repository</DrawerHeading>
       <DrawerText>
         <ExternalLinkify>{indicator.link_to_data_repository}</ExternalLinkify>
