@@ -62,6 +62,17 @@ const INDICATORS = [
     },
   },
   {
+    slug: "total-cases",
+    id: "jhu_confirmed",
+    name: "Total Cases",
+    hasMap: true,
+    scale: {
+      type: "threshold",
+      domain: [1000000, 100000, 10000, 1000],
+      range: [DARK_RED, LIGHT_RED, ORANGE, DARK_BLUE, LIGHT_BLUE],
+    },
+  },
+  {
     slug: "new-deaths-per-million",
     id: "owid_new_deaths_per_million",
     name: "New Deaths Per Million",
