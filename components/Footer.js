@@ -48,12 +48,12 @@ const Footer = () => {
               <FooterLink href="https://covid19commission.org/" target="_blank">
                 Lancet Commission on COVID-19
               </FooterLink>
-              . The data portal is updated daily from Monday to Friday. It
-              provides access to the latest data available on COVID-19, such as
-              new cases, deaths, positive test rate, and other valuable data to
-              gauge the transmission and response to the pandemic. Data is
-              pooled from different sources, including Johns Hopkins University,
-              Our World in Data, Oxford, YouGov, and Google.
+              . The data portal is updated once per week. It provides access to
+              the latest data available on COVID-19, such as new cases, deaths,
+              positive test rate, and other valuable data to gauge the
+              transmission and response to the pandemic. Data is pooled from
+              different sources, including Johns Hopkins University, Our World
+              in Data, Oxford, YouGov, and Google.
             </FooterTypography>
             <FooterTypography gutterBottom>
               Our database and data portal are open source. The source code is

@@ -25,7 +25,7 @@ const DownloadDatabaseDialog = observer(() => {
           over 3 million data points and more than 100 indicators. The data has
           been collected from a range of sources, including Johns Hopkins
           University, Our World in Data, Oxford, YouGov, and Google. The
-          database is updated daily from Monday to Friday.
+          database is updated once per week.
         </DialogContentText>
       </DialogContent>
       <DialogContent>

@@ -240,12 +240,12 @@ const Index = observer(
               <a href="https://covid19commission.org/" target="_blank">
                 Lancet Commission on COVID-19
               </a>
-              . The data portal is updated daily from Monday to Friday. It
-              provides access to the latest data available on COVID-19, such as
-              new cases, deaths, positive test rate, and other valuable data to
-              gauge the transmission and response to the pandemic. Data is
-              pooled from different sources, including Johns Hopkins University,
-              Our World in Data, Oxford, YouGov, and Google.
+              . The data portal is updated once per week. It provides access to
+              the latest data available on COVID-19, such as new cases, deaths,
+              positive test rate, and other valuable data to gauge the
+              transmission and response to the pandemic. Data is pooled from
+              different sources, including Johns Hopkins University, Our World
+              in Data, Oxford, YouGov, and Google.
             </Typography>
           </Box>
           <Box marginTop={5}>
@@ -265,8 +265,7 @@ const Index = observer(
                 session of the UN General Assembly
               </a>
               . It is based on two key measures: new cases per million and the
-              positive test rate. The assessment is updated daily from Monday to
-              Friday.
+              positive test rate. The assessment is updated once per week.
             </Typography>
             <Box marginY={3}>
               <iframe
