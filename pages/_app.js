@@ -7,6 +7,7 @@ import { CssBaseline } from "@material-ui/core";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import NextNProgress from "nextjs-progressbar";
 import { ThemeProvider } from "styled-components";
+import ArchiveNotice from "components/ArchiveNotice";
 import { StoreProvider } from "helpers/uiStore";
 import getTheme from "helpers/getTheme";
 import * as gtag from "helpers/gtag";
@@ -85,6 +86,7 @@ function MyApp({ Component, pageProps }) {
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
             <Component {...pageProps} />
+            <ArchiveNotice />
           </ThemeProvider>
         </MuiThemeProvider>
       </StoreProvider>
